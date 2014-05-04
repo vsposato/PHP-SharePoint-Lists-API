@@ -130,14 +130,17 @@ class SharePointAPI {
 	 */
 	protected $internal_encoding = 'UTF-8';
 
-	/**
-	 * Constructor
-	 *
-	 * @param string $spUsername User account to authenticate with. (Must have read/write/edit permissions to given Lists)
-	 * @param string $spPassword Password to use with authenticating account.
-	 * @param string $spWsdl WSDL file for this set of lists ( sharepoint.url/subsite/_vti_bin/Lists.asmx?WSDL )
-	 * @param Whether to authenticate with NTLM
-	 */
+    /**
+     * Constructor
+     *
+     * @param string $spUsername User account to authenticate with. (Must have read/write/edit permissions to given Lists)
+     * @param string $spPassword Password to use with authenticating account.
+     * @param string $spWsdl     WSDL file for this set of lists ( sharepoint.url/subsite/_vti_bin/Lists.asmx?WSDL )
+     * @param string $mode
+     *
+     * @throws \Exception
+     * @internal param \Thybag\to $Whether authenticate with NTLM
+     */
 	public function __construct ($spUsername, $spPassword, $spWsdl, $mode = 'STANDARD') {
 		// Check if required class is found
 		assert(class_exists('SoapClient'));
@@ -184,13 +187,15 @@ class SharePointAPI {
 		}
 	}
 
-	/**
-	 * Calls methods on SOAP object
-	 *
-	 * @param	string	$methodName		Name of method to call
-	 * @param	array	$methodParams	Parameters to handle over
-	 * @return	mixed	$returned		Returned values
-	 */
+    /**
+     * Calls methods on SOAP object
+     *
+     * @param    string $methodName   Name of method to call
+     * @param    array  $methodParams Parameters to handle over
+     *
+     * @throws \Exception
+     * @return    mixed    $returned        Returned values
+     */
 	public final function __call ($methodName, array $methodParams) {
 		/*
 		 * Is soapClient set? This check may look double here but in later
@@ -302,15 +307,16 @@ class SharePointAPI {
 		return $results;
 	}
 
-	/**
-	 * Read List MetaData (Column configurtion)
-	 * Return a full listing of columns and their configurtion options for a given sharepoint list.
-	 *
-	 * @param $list_name Name or GUID of list to return metaData from.
-	 * @param $hideInternal TRUE|FALSE Attempt to hide none useful columns (internal data etc)
-	 * @param $ignoreHiddenAttribute TRUE|FALSE Ignores 'Hidden' attribute if it is set to 'TRUE' - DEBUG ONLY!!!
-	 * @return Array
-	 */
+    /**
+     * Read List MetaData (Column configurtion)
+     * Return a full listing of columns and their configurtion options for a given sharepoint list.
+     *
+     * @param                 $list_name             Name or GUID of list to return metaData from.
+     * @param bool|FALSE|TRUE $hideInternal          TRUE|FALSE Attempt to hide none useful columns (internal data etc)
+     * @param bool|FALSE|TRUE $ignoreHiddenAttribute TRUE|FALSE Ignores 'Hidden' attribute if it is set to 'TRUE' - DEBUG ONLY!!!
+     *
+     * @return Array
+     */
 	public function readListMeta ($list_name, $hideInternal = TRUE, $ignoreHiddenAttribute = FALSE) {
 		// Ready XML
 		$CAML = '
@@ -936,13 +942,14 @@ class SharePointAPI {
 		return $batch;
 	}
 
-	/**
-	 * onError
-	 * This is called when sharepoint throws an error and displays basic debug info.
-	 *
-	 * @param	$fault		Error Information
-	 * @throws	\Exception	Puts data from $fault into an other exception
-	 */
+    /**
+     * onError
+     * This is called when sharepoint throws an error and displays basic debug info.
+     *
+     * @param \SoapFault|\Thybag\Error $fault Error Information
+     *
+     * @throws \Exception Puts data from $fault into an other exception
+     */
 	private function onError (\SoapFault $fault) {
 		$more = '';
 		if (isset($fault->detail->errorstring)) {
@@ -951,18 +958,19 @@ class SharePointAPI {
 		throw new \Exception('Error (' . $fault->faultcode . ') ' . $fault->faultstring . ',more=' . $more);
 	}
 
-	/**
-	 * magicLookup: Helper method
-	 *
-	 * If you know the name of the item you wish to link to in the lookup field, this helper method
-	 * can be used to perform the lookup for you.
-	 *
-	 * @param $sp Active/current instance of sharepointAPI
-	 * @param $name Name of item you wish lookup to reference
-	 * @param $list Name of list item lookup is linked to.
-	 *
-	 * @return "lookup" value sharepoint will accept
-	 */
+    /**
+     * magicLookup: Helper method
+     *
+     * If you know the name of the item you wish to link to in the lookup field, this helper method
+     * can be used to perform the lookup for you.
+     *
+     * @param $name Name of item you wish lookup to reference
+     * @param $list Name of list item lookup is linked to.
+     *
+     * @throws \Exception
+     * @internal param \Thybag\Active $sp /current instance of sharepointAPI
+     * @return string "lookup" value sharepoint will accept
+     */
 	public function magicLookup ($name, $list) {
 		//Perform lookup for specified item on specified list
 		$find = $this->read($list, null, array('Title' => $name));
@@ -992,13 +1000,15 @@ class SharePointAPI {
 		return ($timestamp) ? date('c',$date) : date('c', strtotime($date));
 	}
 
-	/**
-	 * lookup: Helper method
-	 * Format data to be used in lookup datatype
-	 * @param $id ID of item in other table
-	 * @param $title Title of item in other table (this is optional as sharepoint doesn't complain if its not provided)
-	 * @return string "lookup" value sharepoint will accept
-	 */
+    /**
+     * lookup: Helper method
+     * Format data to be used in lookup datatype
+     *
+     * @param                      $id    ID of item in other table
+     * @param string|\Thybag\Title $title Title of item in other table (this is optional as sharepoint doesn't complain if its not provided)
+     *
+     * @return string "lookup" value sharepoint will accept
+     */
 	public static function lookup ($id, $title = '') {
 		return $id . (($title !== '') ? ';#' . $title : '');
 	}
@@ -1052,15 +1062,17 @@ class SharePointAPI {
 	    return $results;
 	}
     public function getColumnVersions ($list, $id, $field) { return $this->getFieldVersions($list, $id, $field); }
-	
-	/**
-	 * getItemVersions
-	 * Get previous versions of an item
-	 *
-	 * @param $list Name or GUID of list
-	 * @param $id ID of item to find versions for
-	 * @return array | object
-	 */
+
+    /**
+     * getItemVersions
+     * Get previous versions of an item
+     *
+     * @param      $list Name or GUID of list
+     * @param      $id   ID of item to find versions for
+     * @param bool $exclude_hidden
+     *
+     * @return array | object
+     */
 	public function getItemVersions ($list, $id, $exclude_hidden = true) {
 	    $fields = $this->readListMeta($list, $exclude_hidden);
 	    
@@ -1093,16 +1105,18 @@ class SharePointAPI {
 
 	    return $results;
 	}
-	
-	/**
-	 * getVersions
-	 * Get previous versions of an item or field
-	 *
-	 * @param $list Name or GUID of list
-	 * @param $id ID of item to find versions for
-	 * @param $field optional name of column to get versions for
-	 * @return array | object
-	 */
+
+    /**
+     * getVersions
+     * Get previous versions of an item or field
+     *
+     * @param      $list  Name or GUID of list
+     * @param      $id    ID of item to find versions for
+     * @param      $field optional name of column to get versions for
+     * @param bool $exclude_hidden
+     *
+     * @return array | object
+     */
 	public function getVersions ($list, $id, $field = null, $exclude_hidden = true) {
 	    if($field === null) {
     	    return $this->getItemVersions($list, $id, $exclude_hidden);
