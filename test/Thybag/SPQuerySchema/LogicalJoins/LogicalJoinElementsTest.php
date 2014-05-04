@@ -29,49 +29,49 @@ class LogicalJoinElementsTest extends \PHPUnit_Framework_TestCase {
 
     }
 
+
     /**
-     * testStaticCAMLJoinWithAnd_WithValidXML
+     * testStaticArrayJoinWithAnd_WithValidXML
      *
-     * @dataProvider simpleXmlAndProvider
-     * @covers LogicalJoinElements::CAMLJoinWithAnd
+     * @dataProvider arrayAndProvider
+     * @covers LogicalJoinElements::ArrayJoinWithAnd()
      *
-     * @author  Vincent Sposato <vsposato@ufl.edu>
-     * @version 1.0
+     * @param $inputCAMLArray
+     * @param $expectedReturn
      */
-    public function testStaticCAMLJoinWithAnd_WithValidXML(\SimpleXMLElement $comparisonOperators, \SimpleXMLElement $expectedReturn) {
+    public function testStaticArrayJoinWithAnd_WithValidXML($inputCAMLArray, $expectedReturn) {
 
-        $actualReturnResults = LogicalJoinElements::CAMLJoinWithAnd($comparisonOperators);
+        $resultCAML = LogicalJoinElements::ArrayJoinWithAnd($inputCAMLArray);
 
-        $this->assertXmlStringEqualsXmlString($expectedReturn->asXML(), $actualReturnResults->asXML());
+        $this->assertXmlStringEqualsXmlString($expectedReturn, $resultCAML);
     }
 
-    public function testStaticArrayJoinWithAnd_WithValidXML() {
-
-    }
     public function arrayAndProvider() {
-        return [
-            [
-                []
-            ],
-        ];
-    }
-    public function simpleXmlAndProvider() {
-        $firstAndXMLString = <<<XML
-<Gt>
-  <FieldRef Name = "Field_Name"/>
-  <Value Type = "Integer">1</Value>
-  <XML />
-</Gt>
+        $expectedReturn1 = <<<XML
+<And>
+    <BeginsWith>
+        <FieldRef name="LastName" />
+        <Value type="Integer">1</Value>
+    </BeginsWith>
+</And>
 XML;
 
-        $firstAndXMLElement = New \SimpleXMLElement($firstAndXMLString);
-
-        $firstAndXMLStringExpected = "<And>" . $firstAndXMLString . "</And>";
-        $firstAndXMLElementExpected = New \SimpleXMLElement($firstAndXMLStringExpected);
-
-        return [
-            [$firstAndXMLElement, $firstAndXMLElementExpected]
-        ];
+        return array(
+            array(
+                array(
+                    'BeginsWith' => array(
+                        'FieldRef' => array(
+                            'name' => 'LastName'
+                        ),
+                        'Value' => array(
+                            'type' => 'Integer',
+                            'value' => 1
+                        )
+                    )),
+                $expectedReturn1
+            )
+        );
     }
+
 }
  

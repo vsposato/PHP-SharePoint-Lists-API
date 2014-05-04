@@ -29,8 +29,16 @@ spl_autoload_register(function ($classname) {
     // Pull out the chunks of the class to get directories
     preg_match('/^(.+)?([^\\\\]+)$/U', $classname, $match);
 
+    // Determine if this is a test or not, because a test will need to be loaded from the test
+    // directory, not the src directory
+    if ( substr($classname, -4) === 'Test' ) {
+        $basedir .= 'test/';
+    } else {
+        $basedir .= 'src/';
+    }
+
     // Build the classname including path
-    $classname = $basedir . 'src/' . str_replace("\\", "/", $match[1])
+    $classname = $basedir . str_replace("\\", "/", $match[1])
         . str_replace(array("\\", "_"), "/", $match[2])
         . ".php";
 
