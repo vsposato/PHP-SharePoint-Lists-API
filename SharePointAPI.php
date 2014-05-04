@@ -16,11 +16,26 @@
 
 // PSR-0 Autoloader
 // see: http://zaemis.blogspot.fr/2012/05/writing-minimal-psr-0-autoloader.html
+
+
 spl_autoload_register(function ($classname) {
-	$classname = ltrim($classname, "\\");
-	preg_match('/^(.+)?([^\\\\]+)$/U', $classname, $match);
-	$classname = 'src/'.str_replace("\\", "/", $match[1])
-		. str_replace(array("\\", "_"), "/", $match[2])
-		. ".php";
-	include_once $classname;
+
+    // Gets the basedire of this file to prepend for the filename
+    $basedir = dirname(__FILE__) . '/';
+
+    // Remove the double slashes at the front, if they exist
+    $classname = ltrim($classname, "\\");
+
+    // Pull out the chunks of the class to get directories
+    preg_match('/^(.+)?([^\\\\]+)$/U', $classname, $match);
+
+    // Build the classname including path
+    $classname = $basedir . 'src/' . str_replace("\\", "/", $match[1])
+        . str_replace(array("\\", "_"), "/", $match[2])
+        . ".php";
+
+    // Check to see if file exists, before loading it - this is to prevent a bunch of errors
+    if (file_exists($classname)) {
+        include_once $classname;
+    }
 });
