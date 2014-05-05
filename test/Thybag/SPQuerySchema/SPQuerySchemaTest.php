@@ -36,7 +36,7 @@ class SPQuerySchemaTest extends \PHPUnit_Framework_TestCase {
     /**
      *
      * @dataProvider booleanProvider
-     * @covers SPQuerySchema::validateElements()
+     * @covers Thybag\SPQuerySchema\SPQuerySchema::validateElements()
      *
      * @param $elementToValidate
      * @param $expectedReturn
@@ -50,7 +50,7 @@ class SPQuerySchemaTest extends \PHPUnit_Framework_TestCase {
     /**
      *
      * @dataProvider stringProvider
-     * @covers SPQuerySchema::validateElements()
+     * @covers Thybag\SPQuerySchema\SPQuerySchema::validateElements()
      *
      * @param $elementToValidate
      * @param $expectedReturn
@@ -64,7 +64,7 @@ class SPQuerySchemaTest extends \PHPUnit_Framework_TestCase {
     /**
      *
      * @dataProvider urlProvider
-     * @covers SPQuerySchema::validateElements();
+     * @covers Thybag\SPQuerySchema\SPQuerySchema::validateElements();
      *
      * @param $elementToValidate
      * @param $expectedReturn

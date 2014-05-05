@@ -36,7 +36,7 @@
          * testCreateFieldRef
          *
          * @dataProvider fieldRefProvider
-         * @covers ValueElements::ArrayFieldRef()
+         * @covers Thybag\SPQuerySchema\DataElements\ValueElements::ArrayFieldRef()
          * 
          * @param $arrayToBeConverted
          * @param $expectedResult

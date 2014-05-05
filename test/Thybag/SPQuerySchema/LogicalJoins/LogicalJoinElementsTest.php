@@ -35,7 +35,7 @@ class LogicalJoinElementsTest extends \PHPUnit_Framework_TestCase {
      * testStaticArrayJoinWithAnd_WithValidXML
      *
      * @dataProvider arrayAndProvider
-     * @covers LogicalJoinElements::ArrayJoinWithAnd()
+     * @covers Thybag\SPQuerySchema\LogicalJoins\LogicalJoinElements::ArrayJoinWithAnd()
      *
      * @param $inputCAMLArray
      * @param $expectedReturn
