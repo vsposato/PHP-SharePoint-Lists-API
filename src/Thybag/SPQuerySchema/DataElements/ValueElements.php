@@ -29,7 +29,41 @@ class ValueElements extends SPQuerySchema {
         'Type' => 'String'
     );
 
-    protected static $xmlReturn = '';
+    public static $valueTypeWhiteList = array(
+        'Integer',
+        'Text',
+        'Note',
+        'DateTime',
+        'Counter',
+        'Choice',
+        'Lookup',
+        'Boolean',
+        'Number',
+        'Currency',
+        'URL',
+        'Computed',
+        'Threading',
+        'Guid',
+        'MultiChoice',
+        'GridChoice',
+        'Calculated',
+        'File',
+        'Attachments',
+        'User',
+        'Recurrence',
+        'CrossProjectLink',
+        'ModStat',
+        'Error',
+        'ContentTypeId',
+        'PageSeparator',
+        'ThreadIndex',
+        'WorkflowStatus',
+        'AllDayEvent',
+        'WorkflowEventType',
+        'Geolocation',
+        'OutcomeChoice',
+        'MaxItems'
+    );
 
     protected static function _validateFieldRefKeys( $fieldReferenceDefinition = array() ) {
         // Check to make sure we received a populated array
@@ -61,6 +95,61 @@ class ValueElements extends SPQuerySchema {
 
     }
 
+    public static function ArrayValueXML ( $valueElementDefinition = array() ) {
+
+        if (! array_key_exists('Type', $valueElementDefinition) || ! array_key_exists('Value', $valueElementDefinition)) {
+            return FALSE;
+        }
+
+        if (! in_array($valueElementDefinition['Type'], self::$valueTypeWhiteList)) {
+            return FALSE;
+        }
+
+        $xmlReturn = "<Value Type=\"" . $valueElementDefinition['Type'] . "\"";
+
+        if (isset($valueElementDefinition['IncludeTimeValue'])) {
+            if ($valueElementDefinition['IncludeTimeValue'] == TRUE) {
+                $xmlReturn .= " IncludeTimeValue=\"True\"";
+            } elseif ($valueElementDefinition['IncludeTimeValue'] == FALSE) {
+                $xmlReturn .= " IncludeTimeValue=\"False\"";
+            }
+        }
+        $xmlReturn .= ">" . $valueElementDefinition['Value'] . "</Value>";
+
+        return $xmlReturn;
+
+    }
+
+    public static function ArrayValuesXML( $valuesElementDefinition = array() ) {
+
+        if (! isset($valuesElementDefinition['Values'])) {
+            // We didn't get a properly formatted array
+            return FALSE;
+        }
+
+        $xmlReturn = "<Values>";
+
+        $valueCounter = 0;
+
+        foreach ($valuesElementDefinition['Values'] as $valueArray) {
+            $tempReturn = self::ArrayValueXML($valueArray);
+            if ($tempReturn === FALSE) {
+                continue;
+            }
+            $xmlReturn .= $tempReturn;
+
+            $valueCounter++;
+        }
+
+        if ($valueCounter === 0) {
+            return FALSE;
+        }
+
+        $xmlReturn .= "</Values>";
+
+        return $xmlReturn;
+
+    }
     /**
      * ArrayFieldRef
      *
