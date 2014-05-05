@@ -8,6 +8,8 @@
 
 namespace test\Thybag\SPQuerySchema;
 
+chdir(dirname(__FILE__));
+
 require_once('../../../SharePointAPI.php');
 
 use Thybag\SPQuerySchema\SPQuerySchema;

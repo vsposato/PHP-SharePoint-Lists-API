@@ -8,6 +8,7 @@
 
 namespace test\Thybag\SPQuerySchema\LogicalJoins;
 
+chdir(dirname(__FILE__));
 require_once('../../../../SharePointAPI.php');
 
 use Thybag\SPQuerySchema\LogicalJoins\LogicalJoinElements;

@@ -29,21 +29,34 @@ class ValueElements extends SPQuerySchema {
         'Type' => 'String'
     );
 
+    protected static $xmlReturn = '';
+
     protected static function _validateFieldRefKeys( $fieldReferenceDefinition = array() ) {
         // Check to make sure we received a populated array
         if (! is_array($fieldReferenceDefinition) || empty($fieldReferenceDefinition)) {
             return FALSE;
         }
 
+        $xmlReturn = "<FieldRef ";
         // Loop through each of the items in the array, and remove any unnecessary keys
         foreach ($fieldReferenceDefinition as $fieldRefKey => $fieldRefValue ) {
-            if ( ! array_key_exists($fieldRefKey, Self::$fieldRefKeys) ) {
+            if ( ! array_key_exists($fieldRefKey, self::$fieldRefKeys) ) {
                 // Unknown attributes need to be removed
                 unset($fieldReferenceDefinition[$fieldRefKey]);
             } else {
-
+                if (SPQuerySchema::validateElements($fieldRefValue, self::$fieldRefKeys[$fieldRefKey])) {
+                    $xmlReturn .= $fieldRefKey . "=\"" . $fieldRefValue . "\" ";
+/*                    if (self::$fieldRefKeys[$fieldRefKey] === 'String') {
+                        $xmlReturn .= $fieldRefKey . "=\"" . $fieldRefValue . "\" ";
+                    } else {
+                        $xmlReturn .= $fieldRefKey . "=" . $fieldRefValue . " ";
+                    }*/
+                }
             }
         }
+
+        $xmlReturn .= "/>";
+        return $xmlReturn;
 
     }
     public static function ArrayFieldRef( $fieldReferenceDefinition = array() ) {
