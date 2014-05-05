@@ -8,6 +8,9 @@
 
     namespace test\Thybag\SPQuerySchema\DataElements;
 
+    chdir(dirname(__FILE__));
+    require_once('../../../../SharePointAPI.php');
+
     use Thybag\SPQuerySchema\DataElements\ValueElements;
 
     class ValueElementsTest extends \PHPUnit_Framework_TestCase {
@@ -41,12 +44,10 @@
          * @author  Vincent Sposato <vsposato@ufl.edu>
          * @version 1.0
          */
-        public function testCreateFieldRef( $arrayToBeConverted, $expectedResult ) {
+        public function testArrayFieldRef( $arrayToBeConverted, $expectedResult ) {
 
             $returnResults = ValueELements::ArrayFieldRef( $arrayToBeConverted );
 
-            echo $returnResults . "\n";
-            echo $expectedResult . "\n";
             $this->assertEquals( $expectedResult, $returnResults );
 
         }
@@ -56,7 +57,7 @@
 <FieldRef Alias="Last Name" Ascending="True" CreateURL="http://www.example.com" DisplayName="Customer Last Name" Explicit="False" Format="TestFormat" ID="{AC0923-CD0923-DD092A}" Key="Primary" Name="_LastName" />
 XML1;
             $xmlString2 = <<<XML2
-<FieldRef Alias="First Name" Ascending="False" DisplayName="Customer First Name" Explicit="True" Format="" Name="_FirstName" />
+<FieldRef Alias="First Name" Ascending="False" DisplayName="Customer First Name" Explicit="True" Name="_FirstName" />
 XML2;
 
             return array(
