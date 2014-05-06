@@ -133,9 +133,11 @@ class ValueElements extends SPQuerySchema {
      * Takes in an array formatted in the following format:
      *
      *  array(
-     *      'Type' => 'Integer', (REQUIRED)
-     *      'Value' => 1, (REQUIRED)
-     *      'IncludeTimeValue' => 'True'|'False' (OPTIONAL)
+     *      'Value' => array(
+     *          'Type' => 'Integer', (REQUIRED)
+     *          'Value' => 1, (REQUIRED)
+     *          'IncludeTimeValue' => 'True'|'False' (OPTIONAL)
+     *      )
      *  );
      *
      * It will return a Value XML tag with all of the data needed.
@@ -151,24 +153,39 @@ class ValueElements extends SPQuerySchema {
      */
     public static function ArrayValueXML ( $valueElementDefinition = array() ) {
 
-        if (! array_key_exists('Type', $valueElementDefinition) || ! array_key_exists('Value', $valueElementDefinition)) {
+        // If the field ref key is not there, but it is an array let's attempt to fix the mistake
+        if ( ( !isset( $valueElementDefinition['Value'] ) && is_array( $valueElementDefinition ) )
+            || ( isset( $valueElementDefinition['Value'] ) && !is_array( $valueElementDefinition['Value'] ) )
+        ) {
+            // Make a Field Ref key, and make it equal to the passed in array
+            $tempValueElementDefinition['Value'] = $valueElementDefinition;
+            $valueElementDefinition = $tempValueElementDefinition;
+            unset($tempValueElementDefinition);
+        }
+
+        if (! isset($valueElementDefinition['Value'])) {
+            // We didn't get a properly formatted array
             return FALSE;
         }
 
-        if (! in_array($valueElementDefinition['Type'], self::$valueTypeWhiteList)) {
+        if (! array_key_exists('Type', $valueElementDefinition['Value']) || ! array_key_exists('Value', $valueElementDefinition['Value'])) {
             return FALSE;
         }
 
-        $xmlReturn = "<Value Type=\"" . $valueElementDefinition['Type'] . "\"";
+        if (! in_array($valueElementDefinition['Value']['Type'], self::$valueTypeWhiteList)) {
+            return FALSE;
+        }
 
-        if (isset($valueElementDefinition['IncludeTimeValue'])) {
-            if ($valueElementDefinition['IncludeTimeValue'] == TRUE) {
+        $xmlReturn = "<Value Type=\"" . $valueElementDefinition['Value']['Type'] . "\"";
+
+        if (isset($valueElementDefinition['Value']['IncludeTimeValue'])) {
+            if ($valueElementDefinition['Value']['IncludeTimeValue'] == TRUE) {
                 $xmlReturn .= " IncludeTimeValue=\"True\"";
-            } elseif ($valueElementDefinition['IncludeTimeValue'] == FALSE) {
+            } elseif ($valueElementDefinition['Value']['IncludeTimeValue'] == FALSE) {
                 $xmlReturn .= " IncludeTimeValue=\"False\"";
             }
         }
-        $xmlReturn .= ">" . $valueElementDefinition['Value'] . "</Value>";
+        $xmlReturn .= ">" . $valueElementDefinition['Value']['Value'] . "</Value>";
 
         return $xmlReturn;
 
@@ -200,6 +217,12 @@ class ValueElements extends SPQuerySchema {
      */
     public static function ArrayValuesXML( $valuesElementDefinition = array() ) {
 
+        // If the field ref key is not there, but it is an array let's attempt to fix the mistake
+        if (! isset($valuesElementDefinition['Values']) && is_array($valuesElementDefinition)) {
+            // Make a Field Ref key, and make it equal to the passed in array
+            $valuesElementDefinition['Values'] = $valuesElementDefinition;
+        }
+
         if (! isset($valuesElementDefinition['Values'])) {
             // We didn't get a properly formatted array
             return FALSE;
@@ -209,8 +232,10 @@ class ValueElements extends SPQuerySchema {
 
         $valueCounter = 0;
 
-        foreach ($valuesElementDefinition['Values'] as $valueArray) {
+        foreach ($valuesElementDefinition['Values'] as $valueKey => $valueArray) {
+            //fwrite(STDERR, var_dump($valueArray));
             $tempReturn = self::ArrayValueXML($valueArray);
+            //fwrite(STDERR, var_dump($tempReturn));
             if ($tempReturn === FALSE) {
                 continue;
             }
@@ -244,6 +269,12 @@ class ValueElements extends SPQuerySchema {
      * @version 1.0
      */
     public static function ArrayFieldRef( $fieldReferenceDefinition = array() ) {
+
+        // If the field ref key is not there, but it is an array let's attempt to fix the mistake
+        if (! isset($fieldReferenceDefinition['FieldRef']) && is_array($fieldReferenceDefinition)) {
+            // Make a Field Ref key, and make it equal to the passed in array
+            $fieldReferenceDefinition['FieldRef'] = $fieldReferenceDefinition;
+        }
 
         if (isset($fieldReferenceDefinition['FieldRef'])) {
             // Validate the elements of the array are in correct format

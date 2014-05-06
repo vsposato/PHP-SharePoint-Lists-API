@@ -168,10 +168,32 @@ XML3;
                     array(
                         'Values' => array(
                             array(
-                                'Type'  => 'Integer',
-                                'Value' => 1
+                                'Value' => array(
+                                    'Type'  => 'Integer',
+                                    'Value' => 1
+                                )
                             ),
                             array(
+                                'Value' => array(
+                                    'Type'  => 'Boolean',
+                                    'Value' => 'True'
+                                )
+                            )
+                        )
+                    ),
+                    $xmlString
+                ),
+                // Test missing Values key, but properly formatted the rest of the way - should pass
+                array(
+                    array(
+                        array(
+                            'Value' => array(
+                                'Type'  => 'Integer',
+                                'Value' => 1
+                            )
+                        ),
+                        array(
+                            'Value' => array(
                                 'Type'  => 'Boolean',
                                 'Value' => 'True'
                             )
@@ -179,54 +201,19 @@ XML3;
                     ),
                     $xmlString
                 ),
+                // Test missing Values key, but not properly formatted the rest of the way - should fail
                 array(
                     array(
-                        'Values' => array(
-                            array(
-                                'Type'  => 'GuidWrong',
-                                'Value' => '{AC0923-CD0923-DD092A}'
-                            ),
-                            array(
-                                'Type'  => 'Text',
-                                'Value' => "This is test text!"
+                        array(
+                            'ValueNot' => array(
+                                'Type'  => 'Integer',
+                                'Value' => 1
                             )
-                        )
-                    ),
-                    $xmlString2
-                ),
-                array(
-                    array(
-                        'Values' => array(
-                            array(
-                                'Type'  => 'GuidWrong',
-                                'Value' => '{AC0923-CD0923-DD092A}'
-                            ),
-                            array(
+                        ),
+                        array(
+                            'ValueNot' => array(
                                 'Type'  => 'Boolean',
-                                'Value' => "True"
-                            ),
-                            array(
-                                'Type'  => 'WorkflowStatusWrong',
-                                'Value' => "NotHere"
-                            )
-                        )
-                    ),
-                    $xmlString3
-                ),
-                array(
-                    array(
-                        'Value' => array(
-                            array(
-                                'Type'  => 'GuidWrong',
-                                'Value' => '{AC0923-CD0923-DD092A}'
-                            ),
-                            array(
-                                'Type'  => 'Boolean',
-                                'Value' => "True"
-                            ),
-                            array(
-                                'Type'  => 'WorkflowStatusWrong',
-                                'Value' => "NotHere"
+                                'Value' => 'True'
                             )
                         )
                     ),
@@ -236,12 +223,85 @@ XML3;
                     array(
                         'Values' => array(
                             array(
-                                'Type'  => 'GuidWrong',
-                                'Value' => '{AC0923-CD0923-DD092A}'
+                                'Value' => array(
+                                    'Type'  => 'GuidWrong',
+                                    'Value' => '{AC0923-CD0923-DD092A}'
+                                )
                             ),
                             array(
-                                'Type'  => 'WorkflowStatusWrong',
-                                'Value' => "NotHere"
+                                'Value' => array(
+                                    'Type'  => 'Text',
+                                    'Value' => "This is test text!"
+                                )
+                            )
+                        )
+                    ),
+                    $xmlString2
+                ),
+                array(
+                    array(
+                        'Values' => array(
+                            array(
+                                'Value' => array(
+                                    'Type'  => 'GuidWrong',
+                                    'Value' => '{AC0923-CD0923-DD092A}'
+                                )
+                            ),
+                            array(
+                                'Value' => array(
+                                    'Type'  => 'Boolean',
+                                    'Value' => "True"
+                                )
+                            ),
+                            array(
+                                'Value' => array(
+                                    'Type'  => 'WorkflowStatusWrong',
+                                    'Value' => "NotHere"
+                                )
+                            )
+                        )
+                    ),
+                    $xmlString3
+                ),
+                array(
+                    array(
+                        'Value' => array(
+                            array(
+                                'Value' => array(
+                                    'Type'  => 'GuidWrong',
+                                    'Value' => '{AC0923-CD0923-DD092A}'
+                                )
+                            ),
+                            array(
+                                'Value' => array(
+                                    'Type'  => 'Boolean',
+                                    'Value' => "True"
+                                )
+                            ),
+                            array(
+                                'Value' => array(
+                                    'Type'  => 'WorkflowStatusWrong',
+                                    'Value' => "NotHere"
+                                )
+                            )
+                        )
+                    ),
+                    FALSE
+                ),
+                array(
+                    array(
+                        'Values' => array(
+                            array(
+                                'Value' => array(
+                                    'Type'  => 'GuidWrong',
+                                    'Value' => '{AC0923-CD0923-DD092A}'
+                                )
+                            ),
+                            array(
+                                'Value' => array(
+                                    'Type'  => 'WorkflowStatusWrong',
+                                    'Value' => "NotHere"
+                                )
                             )
                         )
                     ),
@@ -278,51 +338,81 @@ XML4;
             return array(
                 array(
                     array(
+                        'Value' => array(
+                            'Type'  => 'Boolean',
+                            'Value' => 'True'
+                        )
+                    ),
+                    $xmlString
+                ),
+                // Test with missing main value key, but rest is correct - should pass
+                array(
+                    array(
                         'Type'  => 'Boolean',
                         'Value' => 'True'
                     ),
                     $xmlString
                 ),
+                // Test with missing main value key, and rest is wrong - should fail
                 array(
                     array(
-                        'Type'  => 'Text',
-                        'Value' => "This is test text!"
+                        'TypeNot'  => 'Boolean',
+                        'ValueNot' => 'True'
+                    ),
+                    FALSE
+                ),
+                array(
+                    array(
+                        'Value' => array(
+                            'Type'  => 'Text',
+                            'Value' => "This is test text!"
+                        )
                     ),
                     $xmlString2
                 ),
                 array(
                     array(
-                        'Type'  => 'Boolean',
-                        'Value' => "True"
+                        'Value' => array(
+                            'Type'  => 'Boolean',
+                            'Value' => "True"
+                        )
                     ),
                     $xmlString3
                 ),
                 array(
                     array(
-                        'Type'  => 'DateTime',
-                        'Value' => "True",
-                        'IncludeTimeValue' => "True"
+                        'Value' => array(
+                            'Type'             => 'DateTime',
+                            'Value'            => "True",
+                            'IncludeTimeValue' => "True"
+                        )
                     ),
                     $xmlString4
                 ),
                 array(
                     array(
-                        'Types'  => 'Boolean',
-                        'Value' => "True"
+                        'Value' => array(
+                            'Types' => 'Boolean',
+                            'Value' => "True"
+                        )
                     ),
                     FALSE
                 ),
                 array(
                     array(
-                        'Type'  => 'Boolean',
-                        'Values' => "True"
+                        'Value' => array(
+                            'Type'   => 'Boolean',
+                            'Values' => "True"
+                        )
                     ),
                     FALSE
                 ),
                 array(
                     array(
-                        'Type'  => 'BooleanWrong',
-                        'Value' => "True"
+                        'Value' => array(
+                            'Type'  => 'BooleanWrong',
+                            'Value' => "True"
+                        )
                     ),
                     FALSE
                 )
@@ -362,6 +452,50 @@ XML2;
                             'Name'        => '_LastName'
                         )
                     ), $xmlString
+                ),
+                // Test properly formatted array with no valid keys, should return false
+                array(
+                    array(
+                        'FieldRef' => array(
+                            'AliasNot'       => 'Last Name',
+                            'AscendingNot'   => TRUE,
+                            'CreateURLNot'   => 'http://www.example.com',
+                            'DisplayNameNot' => 'Customer Last Name',
+                            'ExplicitNot'    => FALSE,
+                            'FormatNot'      => 'TestFormat',
+                            'IDNot'          => '{AC0923-CD0923-DD092A}',
+                            'KeyNot'         => 'Primary',
+                            'NameNot'        => '_LastName'
+                        )
+                    ), FALSE
+                ),
+                array(
+                    // Test array missing field ref key with valid keys in it, should return correct string
+                    array(
+                        'Alias'       => 'Last Name',
+                        'Ascending'   => TRUE,
+                        'CreateURL'   => 'http://www.example.com',
+                        'DisplayName' => 'Customer Last Name',
+                        'Explicit'    => FALSE,
+                        'Format'      => 'TestFormat',
+                        'ID'          => '{AC0923-CD0923-DD092A}',
+                        'Key'         => 'Primary',
+                        'Name'        => '_LastName'
+                    ), $xmlString
+                ),
+                // Test array missing field ref key with no valid keys in it, should return false
+                array(
+                    array(
+                        'AliasNot'       => 'Last Name',
+                        'AscendingNot'   => TRUE,
+                        'CreateURLNot'   => 'http://www.example.com',
+                        'DisplayNameNot' => 'Customer Last Name',
+                        'ExplicitNot'    => FALSE,
+                        'FormatNot'      => 'TestFormat',
+                        'IDNot'          => '{AC0923-CD0923-DD092A}',
+                        'KeyNot'         => 'Primary',
+                        'NameNot'        => '_LastName'
+                    ), FALSE
                 ),
                 array(
                     array(
