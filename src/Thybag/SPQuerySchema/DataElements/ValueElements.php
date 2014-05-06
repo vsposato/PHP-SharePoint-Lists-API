@@ -12,6 +12,13 @@ use Thybag\SPQuerySchema\SPQuerySchema;
 
 class ValueElements extends SPQuerySchema {
 
+    /**
+     * $fieldRefKeys
+     *
+     * This is a listing of each of the FieldRef attributes, and what type of value they are
+     *
+     * @var array
+     */
     public static $fieldRefKeys = array(
         'Alias' => 'String',
         'Ascending' => 'Boolean',
@@ -29,6 +36,13 @@ class ValueElements extends SPQuerySchema {
         'Type' => 'String'
     );
 
+    /**
+     * $valueTypeWhiteList
+     *
+     * This is a listing of all Value types that are available to be used.
+     *
+     * @var array
+     */
     public static $valueTypeWhiteList = array(
         'Integer',
         'Text',
@@ -65,6 +79,22 @@ class ValueElements extends SPQuerySchema {
         'MaxItems'
     );
 
+    /**
+     * _validateFieldRefKeys
+     *
+     * @static
+     *
+     * Takes in an array formatted for field definition, and returns a FieldRef XML tag
+     *
+     * @see http://msdn.microsoft.com/en-us/library/office/ms442728(v=office.14).aspx
+     *
+     * @param array $fieldReferenceDefinition
+     *
+     * @return array|bool
+     *
+     * @author  Vincent Sposato <vsposato@ufl.edu>
+     * @version 1.0
+     */
     protected static function _validateFieldRefKeys( $fieldReferenceDefinition = array() ) {
         // Check to make sure we received a populated array
         if (! is_array($fieldReferenceDefinition) || empty($fieldReferenceDefinition)) {
@@ -95,6 +125,30 @@ class ValueElements extends SPQuerySchema {
 
     }
 
+    /**
+     * ArrayValueXML
+     *
+     * @static
+     *
+     * Takes in an array formatted in the following format:
+     *
+     *  array(
+     *      'Type' => 'Integer', (REQUIRED)
+     *      'Value' => 1, (REQUIRED)
+     *      'IncludeTimeValue' => 'True'|'False' (OPTIONAL)
+     *  );
+     *
+     * It will return a Value XML tag with all of the data needed.
+     *
+     * @see http://msdn.microsoft.com/en-us/library/office/ms441886(v=office.14).aspx
+     *
+     * @param array $valueElementDefinition
+     *
+     * @return bool|string
+     *
+     * @author  Vincent Sposato <vsposato@ufl.edu>
+     * @version 1.0
+     */
     public static function ArrayValueXML ( $valueElementDefinition = array() ) {
 
         if (! array_key_exists('Type', $valueElementDefinition) || ! array_key_exists('Value', $valueElementDefinition)) {
@@ -120,6 +174,30 @@ class ValueElements extends SPQuerySchema {
 
     }
 
+    /**
+     * ArrayValuesXML
+     *
+     * @static
+     *
+     * Takes in an array formatted in the following format:
+     * array('Values' => array(
+     *  array(
+     *      'Type' => 'Integer',
+     *      'Value' => 1
+     *  )
+     * );
+     *
+     * It will return a Values XML string with multiple Value elements within it
+     *
+     * @see http://msdn.microsoft.com/en-us/library/office/ff625794(v=office.14).aspx
+     *
+     * @param array $valuesElementDefinition
+     *
+     * @return bool|string $xmlReturn
+     *
+     * @author  Vincent Sposato <vsposato@ufl.edu>
+     * @version 1.0
+     */
     public static function ArrayValuesXML( $valuesElementDefinition = array() ) {
 
         if (! isset($valuesElementDefinition['Values'])) {
@@ -201,6 +279,14 @@ class ValueElements extends SPQuerySchema {
 
         // Return the XML String
         return $xmlReturn;
+    }
+
+    public static function XMLElement( $XMLString = "" ) {
+        if ( empty( $XMLString ) || !isset( $XMLString ) ) {
+            return FALSE;
+        }
+
+        return "<XML>" . $XMLString . "</XML>";
     }
 
 } 

@@ -90,11 +90,72 @@
             $this->assertEquals( $expectedResult, $returnResults );
         }
 
+        /**
+         * testXMLElement
+         *
+         * @dataProvider xmlXMLProvider
+         * @covers Thybag\SPQuerySchema\DataElements\ValueElements::XMLElement()
+         *
+         * @param $xmlStringToTest
+         * @param $expectedResult
+         *
+         * @author  Vincent Sposato <vsposato@ufl.edu>
+         * @version 1.0
+         */
+        public function testXMLElement( $xmlStringToTest, $expectedResult ) {
 
-        public function valuesArrayProvider() {
-            $xmlString = <<<XML
+            $returnResults = ValueElements::XMLElement( $xmlStringToTest );
+
+            $this->assertEquals( $expectedResult, $returnResults );
+
+        }
+
+        public function xmlXMLProvider() {
+            $xmlString = <<<XML1
 <Values><Value Type="Integer">1</Value><Value Type="Boolean">True</Value></Values>
-XML;
+XML1;
+            $xmlStringReturn = <<<XML1
+<XML><Values><Value Type="Integer">1</Value><Value Type="Boolean">True</Value></Values></XML>
+XML1;
+
+            $xmlString2 = <<<XML2
+<Values><Value Type="Text">This is test text!</Value></Values>
+XML2;
+            $xmlString2Return = <<<XML2
+<XML><Values><Value Type="Text">This is test text!</Value></Values></XML>
+XML2;
+
+            $xmlString3 = <<<XML3
+<Values><Value Type="Boolean">True</Value></Values>
+XML3;
+            $xmlString3Return = <<<XML3
+<XML><Values><Value Type="Boolean">True</Value></Values></XML>
+XML3;
+
+            $xmlString4 = "";
+
+            return array(
+                array($xmlString, $xmlStringReturn),
+                array($xmlString2, $xmlString2Return),
+                array($xmlString3, $xmlString3Return),
+                array($xmlString4, FALSE),
+            );
+        }
+
+        /**
+         * valuesArrayProvider
+         *
+         * Provides data for the testArrayValuesXML functionality
+         *
+         * @return array
+         *
+         * @author  Vincent Sposato <vsposato@ufl.edu>
+         * @version 1.0
+         */
+        public function valuesArrayProvider() {
+            $xmlString = <<<XML1
+<Values><Value Type="Integer">1</Value><Value Type="Boolean">True</Value></Values>
+XML1;
             $xmlString2 = <<<XML2
 <Values><Value Type="Text">This is test text!</Value></Values>
 XML2;
@@ -190,10 +251,20 @@ XML3;
 
         }
 
+        /**
+         * valueArrayProvider
+         *
+         * Provides data for the testArrayValueXML functionality
+         *
+         * @return array
+         *
+         * @author  Vincent Sposato <vsposato@ufl.edu>
+         * @version 1.0
+         */
         public function valueArrayProvider() {
-            $xmlString = <<<XML
+            $xmlString = <<<XML1
 <Value Type="Boolean">True</Value>
-XML;
+XML1;
             $xmlString2 = <<<XML2
 <Value Type="Text">This is test text!</Value>
 XML2;
@@ -256,8 +327,18 @@ XML4;
                     FALSE
                 )
             );
-
         }
+
+        /**
+         * fieldRefProvider
+         *
+         * Provides data for the testArrayFieldRef functionality
+         *
+         * @return array
+         *
+         * @author  Vincent Sposato <vsposato@ufl.edu>
+         * @version 1.0
+         */
         public function fieldRefProvider() {
             $xmlString = <<<XML1
 <FieldRef Alias="Last Name" Ascending="True" CreateURL="http://www.example.com" DisplayName="Customer Last Name" Explicit="False" Format="TestFormat" ID="{AC0923-CD0923-DD092A}" Key="Primary" Name="_LastName" />
