@@ -179,9 +179,9 @@ class ValueElements extends SPQuerySchema {
         $xmlReturn = "<Value Type=\"" . $valueElementDefinition['Value']['Type'] . "\"";
 
         if (isset($valueElementDefinition['Value']['IncludeTimeValue'])) {
-            if ($valueElementDefinition['Value']['IncludeTimeValue'] == TRUE) {
+            if (strtoupper($valueElementDefinition['Value']['IncludeTimeValue']) == "TRUE") {
                 $xmlReturn .= " IncludeTimeValue=\"True\"";
-            } elseif ($valueElementDefinition['Value']['IncludeTimeValue'] == FALSE) {
+            } elseif (strtoupper($valueElementDefinition['Value']['IncludeTimeValue']) == "FALSE") {
                 $xmlReturn .= " IncludeTimeValue=\"False\"";
             }
         }
@@ -233,9 +233,7 @@ class ValueElements extends SPQuerySchema {
         $valueCounter = 0;
 
         foreach ($valuesElementDefinition['Values'] as $valueKey => $valueArray) {
-            //fwrite(STDERR, var_dump($valueArray));
             $tempReturn = self::ArrayValueXML($valueArray);
-            //fwrite(STDERR, var_dump($tempReturn));
             if ($tempReturn === FALSE) {
                 continue;
             }

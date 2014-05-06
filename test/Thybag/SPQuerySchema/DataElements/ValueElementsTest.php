@@ -37,7 +37,8 @@
          *
          * @dataProvider fieldRefProvider
          * @covers Thybag\SPQuerySchema\DataElements\ValueElements::ArrayFieldRef()
-         * 
+         * @covers Thybag\SPQuerySchema\DataElements\ValueElements::_validateFieldRefKeys()
+         *
          * @param $arrayToBeConverted
          * @param $expectedResult
          *
@@ -306,6 +307,10 @@ XML3;
                         )
                     ),
                     FALSE
+                ),
+                array(
+                    'BadData',
+                    FALSE
                 )
             );
 
@@ -334,6 +339,9 @@ XML3;
             $xmlString4 = <<<XML4
 <Value Type="DateTime" IncludeTimeValue="True">True</Value>
 XML4;
+            $xmlString5 = <<<XML5
+<Value Type="DateTime" IncludeTimeValue="False">True</Value>
+XML5;
 
             return array(
                 array(
@@ -392,6 +400,16 @@ XML4;
                 array(
                     array(
                         'Value' => array(
+                            'Type'             => 'DateTime',
+                            'Value'            => "True",
+                            'IncludeTimeValue' => "False"
+                        )
+                    ),
+                    $xmlString5
+                ),
+                array(
+                    array(
+                        'Value' => array(
                             'Types' => 'Boolean',
                             'Value' => "True"
                         )
@@ -414,6 +432,10 @@ XML4;
                             'Value' => "True"
                         )
                     ),
+                    FALSE
+                ),
+                array(
+                    'BadData',
                     FALSE
                 )
             );
@@ -523,6 +545,10 @@ XML2;
                             'Name'        => '_FirstName'
                         )
                     ), $xmlString2
+                ),
+                array(
+                    'BadData',
+                    FALSE
                 ),
             );
         }

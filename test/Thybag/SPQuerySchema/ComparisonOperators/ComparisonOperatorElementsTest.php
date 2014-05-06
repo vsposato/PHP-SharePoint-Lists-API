@@ -39,6 +39,8 @@ class ComparisonOperatorElementsTest extends \PHPUnit_Framework_TestCase {
      *
      * @dataProvider buildComparisonProvider
      * @covers Thybag\SPQuerySchema\ComparisonOperators\ComparisonOperatorElements::buildComparison()
+     * @covers Thybag\SPQuerySchema\ComparisonOperators\ComparisonOperatorElements::_buildMultipleDefinition()
+     * @covers Thybag\SPQuerySchema\ComparisonOperators\ComparisonOperatorElements::_buildSingleDefinition()
      *
      * @param array $buildDefinition
      * @param       $expectedResult
