@@ -56,6 +56,48 @@ class ComparisonOperatorElementsTest extends \PHPUnit_Framework_TestCase {
 
     }
 
+    /**
+     *
+     * testBuildSingleEmptyArray
+     *
+     * @covers Thybag\SPQuerySchema\ComparisonOperators\ComparisonOperatorElements::buildSingleDefinition()
+     *
+     * @author  Vincent Sposato <vsposato@ufl.edu>
+     * @version 1.0
+     */
+    public function testBuildSingleEmptyArray () {
+
+        $comparisonOperatorClass = new ComparisonOperatorElements();
+
+        $returnResults = $comparisonOperatorClass->buildSingleDefinition(array());
+
+        $this->assertFalse($returnResults);
+
+        unset($comparisonOperatorClass);
+
+    }
+
+    /**
+     *
+     * testBuildMultipleEmptyArray
+     *
+     * @covers Thybag\SPQuerySchema\ComparisonOperators\ComparisonOperatorElements::buildMultipleDefinition()
+     *
+     * @author  Vincent Sposato <vsposato@ufl.edu>
+     * @version 1.0
+     */
+    public function testBuildMultipleEmptyArray () {
+
+        $comparisonOperatorClass = new ComparisonOperatorElements();
+
+        $returnResults = $comparisonOperatorClass->buildMultipleDefinition(array());
+
+        $this->assertFalse($returnResults);
+
+        unset($comparisonOperatorClass);
+
+    }
+
     public function buildComparisonProvider() {
 
         $beginsWithXMLStringXML = <<<XML1

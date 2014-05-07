@@ -117,6 +117,22 @@ class ComparisonOperatorElements extends SPQuerySchema
     }
 
     /**
+     *
+     * buildSingleDefinition
+     *
+     * Instance method to allow use of the build comparison function from an instantiated class
+     *
+     * @param array $singleComparisonDefinition
+     * @return bool|string
+     */
+    public function buildSingleDefinition($singleComparisonDefinition = array())
+    {
+
+        return self::_buildSingleDefinition($singleComparisonDefinition);
+
+    }
+
+    /**
      * _buildSingleDefinition
      *
      * @static
@@ -244,6 +260,21 @@ class ComparisonOperatorElements extends SPQuerySchema
             // Return the results
             return $xmlString;
         }
+    }
+
+    /**
+     * buildMultipleDefinition
+     *
+     * Instance method to allow use of the build comparison function from an instantiated class
+     *
+     * @param array $multipleComparisonDefinition
+     * @return bool|string
+     */
+    public function buildMultipleDefinition($multipleComparisonDefinition = array())
+    {
+
+        return self::_buildMultipleDefinition($multipleComparisonDefinition);
+
     }
 
     /**
