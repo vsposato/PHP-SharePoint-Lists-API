@@ -310,9 +310,22 @@ class ValueElements extends SPQuerySchema {
         return $xmlReturn;
     }
 
-    public static function XMLElement( $XMLString = "" ) {
+    /**
+     * XMLElement
+     *
+     * @static
+     *
+     * Function will take in an a string containing an XML string, and wrap it in an XML tag set
+     *
+     * @param $XMLString
+     * @return bool|string
+     *
+     * @author  Vincent Sposato <vsposato@ufl.edu>
+     * @version 1.0
+     */
+    public static function XMLElement( $XMLString ) {
         if ( empty( $XMLString ) || !isset( $XMLString ) ) {
-            return FALSE;
+            $XMLString = "";
         }
 
         return "<XML>" . $XMLString . "</XML>";

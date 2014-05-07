@@ -39,6 +39,9 @@ class LogicalJoinElementsTest extends \PHPUnit_Framework_TestCase {
      *
      * @param $inputCAMLArray
      * @param $expectedReturn
+     *
+     * @author  Vincent Sposato <vsposato@ufl.edu>
+     * @version 1.0
      */
     public function testStaticArrayJoinWithAnd_WithValidXML($inputCAMLArray, $expectedReturn) {
 
@@ -47,6 +50,16 @@ class LogicalJoinElementsTest extends \PHPUnit_Framework_TestCase {
         $this->assertXmlStringEqualsXmlString($expectedReturn, $resultCAML);
     }
 
+    /**
+     * arrayAndProvider
+     *
+     * Provides data possibilities for the AndJoin
+     *
+     * @return array
+     *
+     * @author  Vincent Sposato <vsposato@ufl.edu>
+     * @version 1.0
+     */
     public function arrayAndProvider() {
         $expectedReturn1 = <<<XML
 <And>

@@ -13,6 +13,31 @@
 
     use Thybag\SPQuerySchema\DataElements\ValueElements;
 
+    /**
+     * Class is meant to be used to test a static function that has a path that could not be touched
+     * through the static calling function
+     *
+     * Class inheritValueElements
+     * @package test\Thybag\SPQuerySchema\DataElements
+     *
+     * @author  Vincent Sposato <vsposato@ufl.edu>
+     * @version 1.0
+     */
+    class inheritValueElements extends ValueElements {
+
+        /**
+         * Used to test a single possibility that could not be tested in another way
+         *
+         * @param $fieldReferenceDefinitionArray
+         * @return array|bool
+         *
+         * @author  Vincent Sposato <vsposato@ufl.edu>
+         * @version 1.0
+         */
+        public function validateFieldRefKeys($fieldReferenceDefinitionArray) {
+            return self::_validateFieldRefKeys($fieldReferenceDefinitionArray);
+        }
+    }
     class ValueElementsTest extends \PHPUnit_Framework_TestCase {
 
         public static function setUpBeforeClass() {
@@ -50,6 +75,25 @@
             $returnResults = ValueELements::ArrayFieldRef( $arrayToBeConverted );
 
             $this->assertEquals( $expectedResult, $returnResults );
+
+        }
+
+        /**
+         * testCreateFieldRefUnsuccessful-EmptyArray
+         *
+         * @covers Thybag\SPQuerySchema\DataElements\ValueElements::_validateFieldRefKeys()
+         *
+         *
+         * @author  Vincent Sposato <vsposato@ufl.edu>
+         * @version 1.0
+         */
+        public function testCreateFieldRefUnsuccessful() {
+
+            $valueElementsChildClass = new inheritValueElements();
+
+            $returnResults = $valueElementsChildClass->validateFieldRefKeys( array() );
+
+            $this->assertEquals( FALSE, $returnResults );
 
         }
 
@@ -134,12 +178,13 @@ XML3;
 XML3;
 
             $xmlString4 = "";
+            $xmlString4Return = "<XML></XML>";
 
             return array(
                 array($xmlString, $xmlStringReturn),
                 array($xmlString2, $xmlString2Return),
                 array($xmlString3, $xmlString3Return),
-                array($xmlString4, FALSE),
+                array($xmlString4, $xmlString4Return),
             );
         }
 

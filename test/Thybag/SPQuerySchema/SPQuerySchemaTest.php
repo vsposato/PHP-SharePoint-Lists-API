@@ -78,6 +78,17 @@ class SPQuerySchemaTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($returnResults, $expectedReturn);
     }
 
+    /**
+     *
+     * @covers Thybag\SPQuerySchema\SPQuerySchema::validateElements();
+     *
+     */
+    public function testValidateELements_Unknown() {
+        $returnResults = SPQuerySchema::validateElements(array("BogusData"), "WrongType");
+
+        $this->assertEquals(FALSE, $returnResults);
+    }
+
     public function booleanProvider() {
 
         return array(
