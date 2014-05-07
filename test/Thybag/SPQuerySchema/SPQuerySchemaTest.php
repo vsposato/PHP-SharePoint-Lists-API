@@ -37,6 +37,7 @@ class SPQuerySchemaTest extends \PHPUnit_Framework_TestCase {
      *
      * @dataProvider booleanProvider
      * @covers Thybag\SPQuerySchema\SPQuerySchema::validateElements()
+     * @covers Thybag\SPQuerySchema\SPQuerySchema::validateBoolean()
      *
      * @param $elementToValidate
      * @param $expectedReturn
@@ -51,6 +52,7 @@ class SPQuerySchemaTest extends \PHPUnit_Framework_TestCase {
      *
      * @dataProvider stringProvider
      * @covers Thybag\SPQuerySchema\SPQuerySchema::validateElements()
+     * @covers Thybag\SPQuerySchema\SPQuerySchema::validateString()
      *
      * @param $elementToValidate
      * @param $expectedReturn
@@ -65,6 +67,7 @@ class SPQuerySchemaTest extends \PHPUnit_Framework_TestCase {
      *
      * @dataProvider urlProvider
      * @covers Thybag\SPQuerySchema\SPQuerySchema::validateElements();
+     * @covers Thybag\SPQuerySchema\SPQuerySchema::validateURL();
      *
      * @param $elementToValidate
      * @param $expectedReturn
@@ -105,6 +108,7 @@ class SPQuerySchemaTest extends \PHPUnit_Framework_TestCase {
             array("google", FALSE),
             array("https://www.bankofamerica.ru/pathToFile", TRUE),
             array("ssh://www.bankofamerica.ru/pathToFile", FALSE),
+            array("https://02dog\\/pathToFile", FALSE),
         );
     }
 }

@@ -61,6 +61,9 @@ class ComparisonOperatorElementsTest extends \PHPUnit_Framework_TestCase {
         $beginsWithXMLStringXML = <<<XML1
 <BeginsWith><FieldRef Name="_LastName" /><Value Type="Text">Smith</Value></BeginsWith>
 XML1;
+        $beginsWithXMLStringXMLDouble = <<<XML1
+<BeginsWith><FieldRef Name="_LastName" /><Value Type="Text">Smith</Value></BeginsWith><BeginsWith><FieldRef Name="_LastName" /><Value Type="Text">Smith</Value></BeginsWith>
+XML1;
         $dateRangesOverlapStringXML = <<<XML2
 <DateRangesOverlap><FieldRef Name="PromDate" /><Value Type="DateTime">2014-04-01</Value></DateRangesOverlap>
 XML2;
@@ -90,6 +93,92 @@ XML5;
                 ),
                 $beginsWithXMLStringXML
             ),
+            // Test no elements in array for comparison - should fail
+            array(
+                array(
+                    'BeginsWith' => array(
+                        'FieldRef' => array(
+                            'Name' => '_LastName'
+                        ),
+                        'Value'    => array(
+                            'Bogus'
+                        )
+                    )
+                ),
+                FALSE
+            ),
+            // Test no elements in array for comparison - should fail
+            array(
+                array(
+                    'BeginsWith' => array(
+                        'FieldRef' => array(
+                            'Name' => '_LastName'
+                        ),
+                        'Value'
+                    )
+                ),
+                FALSE
+            ),
+            // Test elements in array, but no elements under the array for comparison - should fail
+            array(
+                array(
+                    'BeginsWith' => array(
+                        'FieldRef'
+                    )
+                ),
+                FALSE
+            ),
+            // Test elements in array, but no elements under the array for comparison - should fail
+            array(
+                array(
+                    'BeginsWith' => array(
+                        'FieldRef' => array(
+                            'Bogus'
+                        )
+                    )
+                ),
+                FALSE
+            ),
+            // Test multiple elements in array - should pass
+            array(
+                array(
+                    array(
+                        'BeginsWith' => array(
+                            'FieldRef' => array(
+                                'Name' => '_LastName'
+                            ),
+                            'Value'    => array(
+                                'Type'  => 'Text',
+                                'Value' => 'Smith'
+                            )
+                        )
+                    ),
+                    array(
+                        'BeginsWith' => array(
+                            'FieldRef' => array(
+                                'Name' => '_LastName'
+                            ),
+                            'Value'    => array(
+                                'Type'  => 'Text',
+                                'Value' => 'Smith'
+                            )
+                        )
+                    )
+                ),
+                $beginsWithXMLStringXMLDouble
+            ),
+            // Test multiple elements in array - should pass
+            array(
+                array(
+                    array(
+                        'BeginsWith'
+                    ),
+                    array(
+                        'BeginsWith'
+                    )
+                ),
+                FALSE
+            ),
             array(
                 array(
                     'DateRangesOverlap' => array(
@@ -103,6 +192,12 @@ XML5;
                     )
                 ),
                 $dateRangesOverlapStringXML
+            ),
+            array(
+                array(
+                    'DateRangesOverlap' => array(),
+                ),
+                FALSE
             ),
             array(
                 array(
@@ -142,6 +237,30 @@ XML5;
                     )
                 ),
                 $inStringXML
+            ),
+            array(
+                array(
+                    'In' => array(
+                        'FieldRef' => array(
+                            'Name' => '_LastName'
+                        ),
+                        'Values'
+                    )
+                ),
+                FALSE
+            ),
+            array(
+                array(
+                    'In' => array(
+                        'FieldRef' => array(
+                            'Name' => '_LastName'
+                        ),
+                        'Values'   => array(
+                            'Bogus'
+                        )
+                    )
+                ),
+                FALSE
             ),
             array(
                 array(
