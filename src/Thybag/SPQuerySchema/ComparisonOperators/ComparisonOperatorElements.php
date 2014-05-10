@@ -14,6 +14,12 @@ use Thybag\SPQuerySchema\DataElements\ValueElements;
 class ComparisonOperatorElements extends SPQuerySchema
 {
 
+    /**
+     * $operatorDefinitions
+     *
+     * Used to provide the individual definitions for each possible field that can be built
+     * @var array
+     */
     public static $operatorDefinitions = array(
         'BeginsWith' => array(
             'FieldRef',
@@ -116,21 +122,6 @@ class ComparisonOperatorElements extends SPQuerySchema
         return $xmlReturn;
     }
 
-    /**
-     *
-     * buildSingleDefinition
-     *
-     * Instance method to allow use of the build comparison function from an instantiated class
-     *
-     * @param array $singleComparisonDefinition
-     * @return bool|string
-     */
-    public function buildSingleDefinition($singleComparisonDefinition = array())
-    {
-
-        return self::_buildSingleDefinition($singleComparisonDefinition);
-
-    }
 
     /**
      * _buildSingleDefinition
@@ -158,7 +149,7 @@ class ComparisonOperatorElements extends SPQuerySchema
 
 
         // Loop through each of the definitions
-        foreach ($singleComparisonDefinition as $comparisonKey => $comparisionValueArray) {
+        foreach ($singleComparisonDefinition as $comparisonKey => $comparisonValueArray) {
             // Since there is only 1 definition and it is not valid, return false to indicate failure
             if (!isset(self::$operatorDefinitions[$comparisonKey])) {
                 return FALSE;
@@ -168,7 +159,7 @@ class ComparisonOperatorElements extends SPQuerySchema
             }
 
             // If there is not an array in the comparison array, then we need to return false to indicate failure
-            If ((empty($comparisionValueArray) || !is_array($comparisionValueArray))) {
+            If ((empty($comparisonValueArray) || !is_array($comparisonValueArray))) {
                 continue;
             }
 
@@ -176,9 +167,9 @@ class ComparisonOperatorElements extends SPQuerySchema
             foreach ($targetComparisonOperator as $elementValueArrays) {
                 Switch ($elementValueArrays) {
                     Case "FieldRef":
-                        if (isset($comparisionValueArray['FieldRef']) && is_array($comparisionValueArray['FieldRef'])) {
+                        if (isset($comparisonValueArray['FieldRef']) && is_array($comparisonValueArray['FieldRef'])) {
                             // The field ref is set, and it is an array - which is what the field ref builder is looking for
-                            $fieldRefReturn = ValueElements::ArrayFieldRef($comparisionValueArray['FieldRef']);
+                            $fieldRefReturn = ValueElements::ArrayFieldRef($comparisonValueArray['FieldRef']);
                             if ($fieldRefReturn !== FALSE) {
                                 // We received a valid response - append it to our eventual return string
                                 $xmlString .= $fieldRefReturn;
@@ -194,9 +185,9 @@ class ComparisonOperatorElements extends SPQuerySchema
                         }
                         break;
                     Case "Value":
-                        if (isset($comparisionValueArray['Value']) && is_array($comparisionValueArray['Value'])) {
+                        if (isset($comparisonValueArray['Value']) && is_array($comparisonValueArray['Value'])) {
                             // The Value key is set, go get the well-formed object
-                            $valueReturn = ValueElements::ArrayValueXML($comparisionValueArray['Value']);
+                            $valueReturn = ValueElements::ArrayValueXML($comparisonValueArray['Value']);
                             If ($valueReturn !== FALSE) {
                                 // We received a valid response - append it to our eventual return string
                                 $xmlString .= $valueReturn;
@@ -212,9 +203,9 @@ class ComparisonOperatorElements extends SPQuerySchema
                         }
                         break;
                     Case "Values":
-                        if (isset($comparisionValueArray['Values']) && is_array($comparisionValueArray['Values'])) {
+                        if (isset($comparisonValueArray['Values']) && is_array($comparisonValueArray['Values'])) {
                             // The Values key is set, go get the well-formed object
-                            $valueReturn = ValueElements::ArrayValuesXML($comparisionValueArray['Values']);
+                            $valueReturn = ValueElements::ArrayValuesXML($comparisonValueArray['Values']);
                             If ($valueReturn !== FALSE) {
                                 // We received a valid response - append it to our eventual return string
                                 $xmlString .= $valueReturn;
@@ -231,17 +222,15 @@ class ComparisonOperatorElements extends SPQuerySchema
 
                         break;
                     Case "XML":
-                        if (isset($comparisionValueArray['XML']) && is_array($comparisionValueArray['XML'])) {
+                        if (isset($comparisonValueArray['XML']) && is_array($comparisonValueArray['XML'])) {
                             // The XML key is set, go get the well-formed object
-                            $xmlReturn = ValueElements::XMLElement($comparisionValueArray['XML'][0]);
+                            $xmlReturn = ValueElements::XMLElement($comparisonValueArray['XML'][0]);
+
                             If ($xmlReturn !== FALSE) {
                                 // We received a valid response - append it to our eventual return string
                                 $xmlString .= $xmlReturn;
                                 // Conserve memory - event though not much
                                 unset($xmlReturn);
-                            } else {
-                                // We received a failure, but this is a required item - just fail
-                                return FALSE;
                             }
 
                         } else {
@@ -249,9 +238,6 @@ class ComparisonOperatorElements extends SPQuerySchema
                             continue;
                         }
                         break;
-                    Default:
-                        // We shouldn't get here, but just in case continue
-                        continue;
                 }
             }
             // Close the XML String with the correct comparison tag, and return the results
@@ -260,21 +246,6 @@ class ComparisonOperatorElements extends SPQuerySchema
             // Return the results
             return $xmlString;
         }
-    }
-
-    /**
-     * buildMultipleDefinition
-     *
-     * Instance method to allow use of the build comparison function from an instantiated class
-     *
-     * @param array $multipleComparisonDefinition
-     * @return bool|string
-     */
-    public function buildMultipleDefinition($multipleComparisonDefinition = array())
-    {
-
-        return self::_buildMultipleDefinition($multipleComparisonDefinition);
-
     }
 
     /**

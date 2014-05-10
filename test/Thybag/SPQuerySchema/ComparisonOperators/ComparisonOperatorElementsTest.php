@@ -13,6 +13,53 @@ require_once('../../../../SharePointAPI.php');
 
 use Thybag\SPQuerySchema\ComparisonOperators\ComparisonOperatorElements;
 
+/**
+ * Written simply to be able to test the protected functionality of the ComparisonOperatorElements class
+ *
+ * Class inheritComparisonOperatorElements
+ * @package test\Thybag\SPQuerySchema\ComparisonOperators
+ *
+ * @author  Vincent Sposato <vsposato@ufl.edu>
+ * @version 1.0
+ */
+class inheritComparisonOperatorElements extends ComparisonOperatorElements {
+    /**
+     *
+     * buildSingleDefinition
+     *
+     * Instance method to allow use of the build comparison function from an instantiated class
+     *
+     * @param array $singleComparisonDefinition
+     * @return bool|string
+     *
+     * @author  Vincent Sposato <vsposato@ufl.edu>
+     * @version 1.0
+     */
+    public function buildSingleDefinition($singleComparisonDefinition = array())
+    {
+
+        return self::_buildSingleDefinition($singleComparisonDefinition);
+
+    }
+    /**
+     * buildMultipleDefinition
+     *
+     * Instance method to allow use of the build comparison function from an instantiated class
+     *
+     * @param array $multipleComparisonDefinition
+     * @return bool|string
+     *
+     * @author  Vincent Sposato <vsposato@ufl.edu>
+     * @version 1.0
+     */
+    public function buildMultipleDefinition($multipleComparisonDefinition = array())
+    {
+
+        return self::_buildMultipleDefinition($multipleComparisonDefinition);
+
+    }
+
+}
 
 class ComparisonOperatorElementsTest extends \PHPUnit_Framework_TestCase {
 
@@ -60,14 +107,14 @@ class ComparisonOperatorElementsTest extends \PHPUnit_Framework_TestCase {
      *
      * testBuildSingleEmptyArray
      *
-     * @covers Thybag\SPQuerySchema\ComparisonOperators\ComparisonOperatorElements::buildSingleDefinition()
+     * @covers Thybag\SPQuerySchema\ComparisonOperators\ComparisonOperatorElements::_buildSingleDefinition()
      *
      * @author  Vincent Sposato <vsposato@ufl.edu>
      * @version 1.0
      */
     public function testBuildSingleEmptyArray () {
 
-        $comparisonOperatorClass = new ComparisonOperatorElements();
+        $comparisonOperatorClass = new inheritComparisonOperatorElements();
 
         $returnResults = $comparisonOperatorClass->buildSingleDefinition(array());
 
@@ -81,14 +128,14 @@ class ComparisonOperatorElementsTest extends \PHPUnit_Framework_TestCase {
      *
      * testBuildMultipleEmptyArray
      *
-     * @covers Thybag\SPQuerySchema\ComparisonOperators\ComparisonOperatorElements::buildMultipleDefinition()
+     * @covers Thybag\SPQuerySchema\ComparisonOperators\ComparisonOperatorElements::_buildMultipleDefinition()
      *
      * @author  Vincent Sposato <vsposato@ufl.edu>
      * @version 1.0
      */
     public function testBuildMultipleEmptyArray () {
 
-        $comparisonOperatorClass = new ComparisonOperatorElements();
+        $comparisonOperatorClass = new inheritComparisonOperatorElements();
 
         $returnResults = $comparisonOperatorClass->buildMultipleDefinition(array());
 
@@ -98,6 +145,14 @@ class ComparisonOperatorElementsTest extends \PHPUnit_Framework_TestCase {
 
     }
 
+    /**
+     * Provides data for the comparison tests
+     *
+     * @return array
+     *
+     * @author  Vincent Sposato <vsposato@ufl.edu>
+     * @version 1.0
+     */
     public function buildComparisonProvider() {
 
         $beginsWithXMLStringXML = <<<XML1
