@@ -56,41 +56,47 @@ class QueryObjectService {
 		$this->api = $api;
 	}
 
-	/**
-	 * Where
-	 * Perform initial where action
-	 *
-	 * @param $col column to test
-	 * @param $test comparison type (=,!+,<,>)
-	 * @param $value to test with
-	 * @return Ref to self
-	 */
+    /**
+     * Where
+     * Perform initial where action
+     *
+     * @param $col  column to test
+     * @param $test comparison type (=,!+,<,>)
+     * @param $val
+     *
+     * @internal param \Thybag\Service\to $value test with
+     * @return Ref to self
+     */
 	public function where ($col, $test, $val) {
 		return $this->addQueryLine('where', $col, $test, $val);
 	}
 
-	/**
-	 * And_Where
-	 * Perform additional and where actions
-	 *
-	 * @param $col column to test
-	 * @param $test comparison type (=,!+,<,>)
-	 * @param $value to test with
-	 * @return Ref to self
-	 */
+    /**
+     * And_Where
+     * Perform additional and where actions
+     *
+     * @param $col  column to test
+     * @param $test comparison type (=,!+,<,>)
+     * @param $val
+     *
+     * @internal param \Thybag\Service\to $value test with
+     * @return Ref to self
+     */
 	public function and_where ($col, $test, $val) {
 		return $this->addQueryLine('and', $col, $test, $val);
 	}
 
-	/**
-	 * Or_Where
-	 * Perform additional or where actions
-	 *
-	 * @param $col column to test
-	 * @param $test comparison type (=,!+,<,>)
-	 * @param $value to test with
-	 * @return Ref to self
-	 */
+    /**
+     * Or_Where
+     * Perform additional or where actions
+     *
+     * @param $col  column to test
+     * @param $test comparison type (=,!+,<,>)
+     * @param $val
+     *
+     * @internal param \Thybag\Service\to $value test with
+     * @return Ref to self
+     */
 	public function or_where ($col, $test, $val) {
 		return $this->addQueryLine('or', $col, $test, $val);
 	}
@@ -135,14 +141,15 @@ class QueryObjectService {
 		return $this;
 	}
 
-	/**
-	 * Sort
-	 * Specify order data should be returned in.
-	 *
-	 * @param $sort_on column to sort on
-	 * @param $order Sort direction
-	 * @return Ref to self
-	 */
+    /**
+     * Sort
+     * Specify order data should be returned in.
+     *
+     * @param                             $sort_on column to sort on
+     * @param string|\Thybag\Service\Sort $order   Sort direction
+     *
+     * @return Ref to self
+     */
 	public function sort ($sort_on, $order = 'desc') {
 		$queryString = '<FieldRef Name="'  .$sort_on . '" Ascending="' . $this->api->getSortFromValue($order) . '" />';
 		$this->sort_caml = '<OrderBy>' . $queryString . '</OrderBy>';
@@ -163,13 +170,14 @@ class QueryObjectService {
 	}
 	public function columns ($fields) { return $this->fields($fields); }
 
-	/**
-	 * all_fields
-	 * Attempt to include all fields row has within result
-	 *
-	 * @param $exclude_hidden to to false to include hidden fields
-	 * @return Ref to self
-	 */
+    /**
+     * all_fields
+     * Attempt to include all fields row has within result
+     *
+     * @param bool|\Thybag\Service\to $exclude_hidden to to false to include hidden fields
+     *
+     * @return Ref to self
+     */
 	public function all_fields($exclude_hidden = true){
 		$fields = $this->api->readListMeta($this->list_name, $exclude_hidden);
 		foreach ($fields as $field) {

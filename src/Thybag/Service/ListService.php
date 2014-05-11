@@ -54,26 +54,32 @@ class ListService {
 		return $this->api->writeMultiple($this->list_name, $data);
 	}
 
-	/**
-	 * Read
-	 * Read items from List
-	 *
-	 * @param int $limit
-	 * @param Array $query
-	 * @return Array
-	 */
+    /**
+     * Read
+     * Read items from List
+     *
+     * @param int   $limit
+     * @param Array $query
+     * @param null  $view
+     * @param null  $sort
+     * @param null  $options
+     *
+     * @return Array
+     */
 	public function read ($limit = 0, $query = NULL, $view = NULL, $sort = NULL, $options = NULL) {
 		return $this->api->read($this->list_name, $limit, $query, $view, $sort, $options);
 	}
 
-	/**
-	 * Update
-	 * Update/Modifiy an existing list item.
-	 *
-	 * @param int $ID ID of item to update
-	 * @param Array $data Assosative array of data to change.
-	 * @return Array
-	 */
+    /**
+     * Update
+     * Update/Modifiy an existing list item.
+     *
+     * @param       $item_id
+     * @param Array $data Assosative array of data to change.
+     *
+     * @internal param int $ID ID of item to update
+     * @return Array
+     */
 	public function update ($item_id, array $data) {
 		return $this->api->update($this->list_name, $item_id, $data);
 	}
@@ -89,13 +95,15 @@ class ListService {
 		return $this->api->updateMultiple($this->list_name, $data);
 	}
 
-	/**
-	 * Delete
-	 * Delete an existing list item.
-	 *
-	 * @param int $item_id ID of item to delete
-	 * @return Array
-	 */
+    /**
+     * Delete
+     * Delete an existing list item.
+     *
+     * @param int   $item_id ID of item to delete
+     * @param array $data
+     *
+     * @return Array
+     */
 	public function delete ($item_id, array $data = array()) {
 		return $this->api->delete($this->list_name, $item_id, $data);
 	}
