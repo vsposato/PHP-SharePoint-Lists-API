@@ -225,10 +225,10 @@ class SharePointAPI {
 	 *
 	 * @param	array	$keys		Keys which shall be included in final JSON output
 	 * @param	array	$params		Only search for lists with given criteria (default: 'hidden' => 'False')
-	 * @param	bool	$isSensetive	Whether to look case-sensetive (default: TRUE)
+	 * @param	bool	$isSensitive	Whether to look case-sensetive (default: TRUE)
 	 * @return	array	$newLists	An array with given keys from all lists
 	 */
-	public function getLimitedLists (array $keys, array $params = array('hidden' => 'False'), $isSensetive = TRUE) {
+	public function getLimitedLists (array $keys, array $params = array('hidden' => 'False'), $isSensitive = TRUE) {
 		// Get the full list back
 		$lists = $this->getLists();
 
@@ -241,7 +241,7 @@ class SharePointAPI {
 			// Search for all criteria
 			foreach ($params as $key => $value) {
 				// Is it found?
-				if ((isset($entry[$key])) && ((($isSensetive === TRUE) && ($value != $entry[$key])) || (strtolower($value) != strtolower($entry[$key])))) {
+				if ((isset($entry[$key])) && ((($isSensitive === TRUE) && ($value != $entry[$key])) || (strtolower($value) != strtolower($entry[$key])))) {
 					// Is not found
 					$isFound = FALSE;
 					break;
