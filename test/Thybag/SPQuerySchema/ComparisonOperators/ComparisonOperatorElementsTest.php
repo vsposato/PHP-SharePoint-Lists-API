@@ -180,10 +180,14 @@ XML5;
                 array(
                     'BeginsWith' => array(
                         'FieldRef' => array(
-                            'Name' => '_LastName'
+                            '_attributes' => array(
+                                'Name' => '_LastName'
+                            )
                         ),
                         'Value'    => array(
-                            'Type'  => 'Text',
+                            '_attributes' => array(
+                                'Type'  => 'Text',
+                            ),
                             'Value' => 'Smith'
                         )
                     )
@@ -195,7 +199,9 @@ XML5;
                 array(
                     'BeginsWith' => array(
                         'FieldRef' => array(
-                            'Name' => '_LastName'
+                            '_attributes' => array(
+                                'Name' => '_LastName'
+                            )
                         ),
                         'Value'    => array(
                             'Bogus'
@@ -209,7 +215,9 @@ XML5;
                 array(
                     'BeginsWith' => array(
                         'FieldRef' => array(
-                            'Name' => '_LastName'
+                            '_attributes' => array(
+                                'Name' => '_LastName'
+                            )
                         ),
                         'Value'
                     )
@@ -242,10 +250,14 @@ XML5;
                     array(
                         'BeginsWith' => array(
                             'FieldRef' => array(
-                                'Name' => '_LastName'
+                                '_attributes' => array(
+                                    'Name' => '_LastName'
+                                )
                             ),
                             'Value'    => array(
-                                'Type'  => 'Text',
+                                '_attributes' => array(
+                                    'Type'  => 'Text'
+                                ),
                                 'Value' => 'Smith'
                             )
                         )
@@ -253,10 +265,14 @@ XML5;
                     array(
                         'BeginsWith' => array(
                             'FieldRef' => array(
-                                'Name' => '_LastName'
+                                '_attributes' => array(
+                                    'Name' => '_LastName'
+                                )
                             ),
                             'Value'    => array(
-                                'Type'  => 'Text',
+                                '_attributes' => array(
+                                    'Type'  => 'Text',
+                                ),
                                 'Value' => 'Smith'
                             )
                         )
@@ -280,10 +296,14 @@ XML5;
                 array(
                     'DateRangesOverlap' => array(
                         'FieldRef' => array(
-                            'Name' => 'PromDate'
+                            '_attributes' => array(
+                                'Name' => 'PromDate'
+                            )
                         ),
                         'Value'    => array(
-                            'Type'  => 'DateTime',
+                            '_attributes' => array(
+                                'Type'  => 'DateTime',
+                            ),
                             'Value' => '2014-04-01'
                         )
                     )
@@ -300,12 +320,16 @@ XML5;
                 array(
                     'DateRangesOverlap' => array(
                         'FieldRef' => array(
-                            'Name' => 'PromDate'
+                            '_attributes' => array(
+                                'Name' => 'PromDate'
+                            )
                         ),
                         'Value'    => array(
-                            'Type'             => 'DateTime',
-                            'Value'            => '2014-04-01 08:00',
-                            'IncludeTimeValue' => 'True'
+                            '_attributes' => array(
+                                'Type'             => 'DateTime',
+                                'IncludeTimeValue' => 'True'
+                            ),
+                            'Value'            => '2014-04-01 08:00'
                         )
                     )
                 ),
@@ -315,18 +339,24 @@ XML5;
                 array(
                     'In' => array(
                         'FieldRef' => array(
-                            'Name' => '_LastName'
+                            '_attributes' => array(
+                                'Name' => '_LastName'
+                            )
                         ),
                         'Values'   => array(
                             array(
                                 'Value' => array(
-                                    'Type'  => 'Text',
+                                    '_attributes' => array(
+                                        'Type'  => 'Text'
+                                    ),
                                     'Value' => 'Smith'
                                 )
                             ),
                             array(
                                 'Value' => array(
-                                    'Type'  => 'Text',
+                                    '_attributes' => array(
+                                        'Type'  => 'Text'
+                                    ),
                                     'Value' => 'Pence',
                                 )
                             )
@@ -339,7 +369,9 @@ XML5;
                 array(
                     'In' => array(
                         'FieldRef' => array(
-                            'Name' => '_LastName'
+                            '_attributes' => array(
+                                'Name' => '_LastName'
+                            )
                         ),
                         'Values'
                     )
@@ -350,7 +382,9 @@ XML5;
                 array(
                     'In' => array(
                         'FieldRef' => array(
-                            'Name' => '_LastName'
+                            '_attributes' => array(
+                                'Name' => '_LastName'
+                            )
                         ),
                         'Values'   => array(
                             'Bogus'
@@ -363,15 +397,21 @@ XML5;
                 array(
                     'In' => array(
                         'FieldRef' => array(
-                            'Name' => '_LastName'
+                            '_attributes' => array(
+                                'Name' => '_LastName'
+                            )
                         ),
                         'Values'   => array(
                             array(
-                                'Type'  => 'Text',
+                                '_attributes' => array(
+                                    'Type'  => 'Text',
+                                ),
                                 'Value' => 'Smith'
                             ),
                             array(
-                                'Type'  => 'Text',
+                                '_attributes' => array(
+                                    'Type'  => 'Text',
+                                ),
                                 'Value' => 'Pence',
                             )
                         ),
@@ -387,15 +427,21 @@ XML5;
                 array(
                     'InWrong' => array(
                         'FieldRef' => array(
-                            'Name' => '_LastName'
+                            '_attributes' => array(
+                                'Name' => '_LastName'
+                            )
                         ),
                         'Values'   => array(
                             array(
-                                'Type'  => 'Text',
+                                '_attributes' => array(
+                                    'Type'  => 'Text',
+                                ),
                                 'Value' => 'Smith'
                             ),
                             array(
-                                'Type'  => 'Text',
+                                '_attributes' => array(
+                                    'Type'  => 'Text',
+                                ),
                                 'Value' => 'Pence',
                             )
                         ),
