@@ -137,8 +137,13 @@
                             $k = "nodeValue$k";
                         }
                         if ( is_array( $v ) ) {
-
-                            $return .= "<$k>" . $this->parseArray( $v ) . "</$k>";
+                            if (array_key_exists("@attributes", $v)) {
+                                $return .= "<$k " . $this->parseAttributes($v['@attributes']) . ">";
+                                unset($v['@attributes']);
+                            } else {
+                                $return .= "<$k>";
+                            }
+                            $return .= $this->parseArray( $v ) . "</$k>";
                         } else {
                             $return .= "<$k>$v</$k>";
                         }
@@ -152,6 +157,22 @@
             return $return;
         }
 
+        private function parseAttributes($array) {
+            $return = "";
+            if (is_array($array)) {
+                foreach ($array as $attribute => $attributeValue) {
+                    if (is_array($attribute)) {
+                        $this->errorLog[] = "Invalid array in function: " . __FUNCTION__ . " on line: " . __LINE__ . " in filename= " . __FILE__;
+                        return "";
+                    }
+                    $return .= $attribute . '="' . $attributeValue . '" ';
+                }
+            } else {
+                $this->errorLog[] = "Invalid array in function: " . __FUNCTION__ . " on line: " . __LINE__ . " in filename= " . __FILE__;
+                return "";
+            }
+            return $return;
+        }
         /**
          * Function to convert an associative array into XML
          *

@@ -10,6 +10,7 @@ namespace Thybag\SPQuerySchema\ComparisonOperators;
 
 use Thybag\SPQuerySchema\SPQuerySchema;
 use Thybag\SPQuerySchema\DataElements\ValueElements;
+use Thybag\XML\XMLHandler;
 
 class ComparisonOperatorElements extends SPQuerySchema
 {

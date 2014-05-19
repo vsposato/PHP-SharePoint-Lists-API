@@ -1,5 +1,6 @@
 <?php
 namespace Thybag;
+use Thybag\XML\XMLHandler;
 
 /**
  * SharepointAPI
