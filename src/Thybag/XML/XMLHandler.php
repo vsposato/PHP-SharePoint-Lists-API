@@ -74,8 +74,8 @@
         private function parseXml( $ret ) {
             $return = FALSE;
             if ( is_object( $ret ) ) {
-                $ret = (array)$ret;
-                $this->parseXml( $ret );
+                $ret2 = (array)$ret;
+                $return[$ret->getName()] = $this->parseXml( $ret2 );
             }
             if ( is_array( $ret ) ) {
                 foreach ( $ret as $k => $v ) {

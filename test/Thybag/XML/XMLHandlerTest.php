@@ -49,11 +49,32 @@
 
             $xmlToArrayObject = new XMLHandler();
 
-            $results = $xmlToArrayObject->convertXmlToArray($inputXML);
-            foreach ($results as $key => $result) {
+            $resultArray = $xmlToArrayObject->convertXmlToArray($inputXML);
+            if (array_key_exists('Root', $resultArray)) {
+                array_shift($resultArray);
+            }
+            foreach ($resultArray as $key => $result) {
                 $this->assertArrayHasKey($key, $expectedArrayResults);
             }
+        }
 
+        /**
+         * testConvertArrayToXML
+         *
+         * @dataProvider XmlToArrayProvider
+         *
+         * @param $inputArray
+         * @param $expectedXML
+         *
+         * @author  Vincent Sposato <vsposato@ufl.edu>
+         * @version 1.0
+         */
+        public function testConvertArrayToXML($inputArray, $expectedXML) {
+
+            $xmlToArrayObject = new XMLHandler();
+            $resultXML = $xmlToArrayObject->convertArrayToXML($inputArray, 'Root');
+
+            $this->assertXmlStringEqualsXmlString($expectedXML,$resultXML);
         }
 
         public function XmlToArrayProvider() {
@@ -72,10 +93,10 @@ XML3;
             $inStringXML = <<<XML4
 <Root><In><FieldRef Name="_LastName" /><Values><Value Type="Text">Smith</Value><Value Type="Text">Pence</Value></Values></In></Root>
 XML4;
-
             $inStringXMLWithXMLIsland = <<<XML5
 <Root><In><FieldRef Name="_LastName" /><Values><Value Type="Text">Smith</Value><Value Type="Text">Pence</Value></Values><XML><SetVar Name="GlobalVar" Scope="Request">Bar</SetVar></XML></In></Root>
 XML5;
+
             return array(
                 array(
                     array(
@@ -110,9 +131,7 @@ XML5;
                                     ),
                                     'Value' => 'Smith'
                                 )
-                            )
-                        ),
-                        array(
+                            ),
                             'BeginsWith' => array(
                                 'FieldRef' => array(
                                     '@attributes' => array(
@@ -181,7 +200,8 @@ XML5;
                                         '@attributes' => array(
                                             'Type'  => 'Text'
                                         ),
-                                        'Value' => 'Smith'
+//                                        'Value' => 'Smith'
+                                        'Smith'
                                     )
                                 ),
                                 array(
@@ -189,7 +209,8 @@ XML5;
                                         '@attributes' => array(
                                             'Type'  => 'Text'
                                         ),
-                                        'Value' => 'Pence',
+//                                        'Value' => 'Pence',
+                                        'Pence',
                                     )
                                 )
                             )
