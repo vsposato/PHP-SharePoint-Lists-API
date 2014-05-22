@@ -156,7 +156,7 @@ class XMLHandler
                     // Check to see if the key is NOT numeric, and the value is an array
                     if (!is_numeric($arrayKey) && is_array($arrayValue)) {
                         // Does the attributes key exist?
-                        if (array_key_exists("@attributes", $arrayValue)) {
+                        if (array_key_exists("@attributes", $arrayValue) && is_array($arrayValue['@attributes'])) {
                             // It does, so process it accordingly
                             $return .= "<$arrayKey" . $this->parseAttributes($arrayValue['@attributes']) . ">";
                             // Remove the attributes array, because we need to not parse it again
@@ -169,7 +169,7 @@ class XMLHandler
                         // in between the tag, so we need to process it
                         if (array_key_exists($arrayKey, $arrayValue)) {
                             // If the count of the values in the array
-                            if (! is_array($arrayValue)) {
+                            if (! is_array($arrayValue[$arrayKey])) {
                                 $return .= $arrayValue[$arrayKey] . "</$arrayKey>";
                             } else {
                                 $return .= $this->parseArray($arrayValue) . "</$arrayKey>";
@@ -222,6 +222,8 @@ class XMLHandler
      *
      * @param string $rootNodeName
      *
+     * @param bool   $includeXmlOpen
+     *
      * @access public
      * @return string(xml) on success and false on failure
      */
@@ -231,10 +233,16 @@ class XMLHandler
         if ($includeXmlOpen == TRUE) {
             $return = "<?xml version='1.0' encoding='ISO-8859-1'?><{$rootNodeName}>";
         } else {
-            $return = "<{$rootNodeName}>";
+            if (! $rootNodeName) {
+                $return = "";
+            } else {
+                $return = "<{$rootNodeName}>";
+            }
         }
         $return .= $this->parseArray($array);
-        $return .= "</{$rootNodeName}>";
+        if ($rootNodeName) {
+            $return .= "</{$rootNodeName}>";
+        }
 
         return $return;
     }

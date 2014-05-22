@@ -9,6 +9,7 @@
 namespace Thybag\SPQuerySchema\DataElements;
 
 use Thybag\SPQuerySchema\SPQuerySchema;
+use Thybag\XML\XMLHandler;
 
 class ValueElements extends SPQuerySchema {
 
@@ -168,15 +169,22 @@ class ValueElements extends SPQuerySchema {
             return FALSE;
         }
 
-        if (! array_key_exists('Type', $valueElementDefinition['Value']) || ! array_key_exists('Value', $valueElementDefinition['Value'])) {
+        if (! isset($valueElementDefinition['Value']['@attributes'])) {
+            $valueElementDefinition['Value']['@attributes'] = NULL;
+        }
+
+        if ( ((is_array($valueElementDefinition['Value']['@attributes']) && (! array_key_exists('Type', $valueElementDefinition['Value']['@attributes'])))) || ! array_key_exists('Value', $valueElementDefinition['Value'])) {
             return FALSE;
         }
 
-        if (! in_array($valueElementDefinition['Value']['Type'], self::$valueTypeWhiteList)) {
+        if (! in_array($valueElementDefinition['Value']['@attributes']['Type'], self::$valueTypeWhiteList)) {
             return FALSE;
         }
 
-        $xmlReturn = "<Value Type=\"" . $valueElementDefinition['Value']['Type'] . "\"";
+        $xmlReturn = new XMLHandler();
+        $xmlStringReturn = $xmlReturn->convertArrayToXML($valueElementDefinition,FALSE  ,FALSE);
+
+/*        $xmlReturn = "<Value Type=\"" . $valueElementDefinition['Value']['Type'] . "\"";
 
         if (isset($valueElementDefinition['Value']['IncludeTimeValue'])) {
             if (strtoupper($valueElementDefinition['Value']['IncludeTimeValue']) == "TRUE") {
@@ -185,9 +193,9 @@ class ValueElements extends SPQuerySchema {
                 $xmlReturn .= " IncludeTimeValue=\"False\"";
             }
         }
-        $xmlReturn .= ">" . $valueElementDefinition['Value']['Value'] . "</Value>";
+        $xmlReturn .= ">" . $valueElementDefinition['Value']['Value'] . "</Value>";*/
 
-        return $xmlReturn;
+        return $xmlStringReturn;
 
     }
 
@@ -228,7 +236,7 @@ class ValueElements extends SPQuerySchema {
             return FALSE;
         }
 
-        $xmlReturn = "<Values>";
+        $xmlStringReturn = "<Values>";
 
         $valueCounter = 0;
 
@@ -237,7 +245,7 @@ class ValueElements extends SPQuerySchema {
             if ($tempReturn === FALSE) {
                 continue;
             }
-            $xmlReturn .= $tempReturn;
+            $xmlStringReturn .= $tempReturn;
 
             $valueCounter++;
         }
@@ -246,9 +254,9 @@ class ValueElements extends SPQuerySchema {
             return FALSE;
         }
 
-        $xmlReturn .= "</Values>";
+        $xmlStringReturn .= "</Values>";
 
-        return $xmlReturn;
+        return $xmlStringReturn;
 
     }
     /**

@@ -8,8 +8,8 @@
 
     namespace test\Thybag\SPQuerySchema\DataElements;
 
-    chdir(dirname(__FILE__));
-    require_once('../../../../SharePointAPI.php');
+    chdir( dirname( __FILE__ ) );
+    require_once( '../../../../SharePointAPI.php' );
 
     use Thybag\SPQuerySchema\DataElements\ValueElements;
 
@@ -18,6 +18,7 @@
      * through the static calling function
      *
      * Class inheritValueElements
+     *
      * @package test\Thybag\SPQuerySchema\DataElements
      *
      * @author  Vincent Sposato <vsposato@ufl.edu>
@@ -29,15 +30,17 @@
          * Used to test a single possibility that could not be tested in another way
          *
          * @param $fieldReferenceDefinitionArray
+         *
          * @return array|bool
          *
          * @author  Vincent Sposato <vsposato@ufl.edu>
          * @version 1.0
          */
-        public function validateFieldRefKeys($fieldReferenceDefinitionArray) {
-            return self::_validateFieldRefKeys($fieldReferenceDefinitionArray);
+        public function validateFieldRefKeys( $fieldReferenceDefinitionArray ) {
+            return self::_validateFieldRefKeys( $fieldReferenceDefinitionArray );
         }
     }
+
     class ValueElementsTest extends \PHPUnit_Framework_TestCase {
 
         public static function setUpBeforeClass() {
@@ -61,14 +64,14 @@
          * testCreateFieldRef
          *
          * @dataProvider fieldRefProvider
-         * @covers Thybag\SPQuerySchema\DataElements\ValueElements::ArrayFieldRef()
-         * @covers Thybag\SPQuerySchema\DataElements\ValueElements::_validateFieldRefKeys()
+         * @covers       Thybag\SPQuerySchema\DataElements\ValueElements::ArrayFieldRef()
+         * @covers       Thybag\SPQuerySchema\DataElements\ValueElements::_validateFieldRefKeys()
          *
          * @param $arrayToBeConverted
          * @param $expectedResult
          *
-         * @author  Vincent Sposato <vsposato@ufl.edu>
-         * @version 1.0
+         * @author       Vincent Sposato <vsposato@ufl.edu>
+         * @version      1.0
          */
         public function testArrayFieldRef( $arrayToBeConverted, $expectedResult ) {
 
@@ -81,7 +84,7 @@
         /**
          * testCreateFieldRefUnsuccessful-EmptyArray
          *
-         * @covers Thybag\SPQuerySchema\DataElements\ValueElements::_validateFieldRefKeys()
+         * @covers  Thybag\SPQuerySchema\DataElements\ValueElements::_validateFieldRefKeys()
          *
          *
          * @author  Vincent Sposato <vsposato@ufl.edu>
@@ -101,13 +104,13 @@
          * testArrayValuesXML
          *
          * @dataProvider valuesArrayProvider
-         * @covers Thybag\SPQuerySchema\DataElements\ValueElements::ArrayValuesXML()
+         * @covers       Thybag\SPQuerySchema\DataElements\ValueElements::ArrayValuesXML()
          *
          * @param $arrayToBeConverted
          * @param $expectedResult
          *
-         * @author  Vincent Sposato <vsposato@ufl.edu>
-         * @version 1.0
+         * @author       Vincent Sposato <vsposato@ufl.edu>
+         * @version      1.0
          */
         public function testArrayValuesXML( $arrayToBeConverted, $expectedResult ) {
 
@@ -120,13 +123,13 @@
          * testArrayValueXML
          *
          * @dataProvider valueArrayProvider
-         * @covers Thybag\SPQuerySchema\DataElements\ValueElements::ArrayValueXML()
+         * @covers       Thybag\SPQuerySchema\DataElements\ValueElements::ArrayValueXML()
          *
          * @param $arrayToBeConverted
          * @param $expectedResult
          *
-         * @author  Vincent Sposato <vsposato@ufl.edu>
-         * @version 1.0
+         * @author       Vincent Sposato <vsposato@ufl.edu>
+         * @version      1.0
          */
         public function testArrayValueXML( $arrayToBeConverted, $expectedResult ) {
 
@@ -139,13 +142,13 @@
          * testXMLElement
          *
          * @dataProvider xmlXMLProvider
-         * @covers Thybag\SPQuerySchema\DataElements\ValueElements::XMLElement()
+         * @covers       Thybag\SPQuerySchema\DataElements\ValueElements::XMLElement()
          *
          * @param $xmlStringToTest
          * @param $expectedResult
          *
-         * @author  Vincent Sposato <vsposato@ufl.edu>
-         * @version 1.0
+         * @author       Vincent Sposato <vsposato@ufl.edu>
+         * @version      1.0
          */
         public function testXMLElement( $xmlStringToTest, $expectedResult ) {
 
@@ -181,10 +184,10 @@ XML3;
             $xmlString4Return = "<XML></XML>";
 
             return array(
-                array($xmlString, $xmlStringReturn),
-                array($xmlString2, $xmlString2Return),
-                array($xmlString3, $xmlString3Return),
-                array($xmlString4, $xmlString4Return),
+                array( $xmlString, $xmlStringReturn ),
+                array( $xmlString2, $xmlString2Return ),
+                array( $xmlString3, $xmlString3Return ),
+                array( $xmlString4, $xmlString4Return ),
             );
         }
 
@@ -215,14 +218,18 @@ XML3;
                         'Values' => array(
                             array(
                                 'Value' => array(
-                                    'Type'  => 'Integer',
-                                    'Value' => 1
+                                    '@attributes' => array(
+                                        'Type' => 'Integer'
+                                    ),
+                                    'Value'       => 1
                                 )
                             ),
                             array(
                                 'Value' => array(
-                                    'Type'  => 'Boolean',
-                                    'Value' => 'True'
+                                    '@attributes' => array(
+                                        'Type' => 'Boolean'
+                                    ),
+                                    'Value'       => 'True'
                                 )
                             )
                         )
@@ -234,14 +241,18 @@ XML3;
                     array(
                         array(
                             'Value' => array(
-                                'Type'  => 'Integer',
-                                'Value' => 1
+                                '@attributes' => array(
+                                    'Type' => 'Integer'
+                                ),
+                                'Value'       => 1
                             )
                         ),
                         array(
                             'Value' => array(
-                                'Type'  => 'Boolean',
-                                'Value' => 'True'
+                                '@attributes' => array(
+                                    'Type' => 'Boolean'
+                                ),
+                                'Value'       => 'True'
                             )
                         )
                     ),
@@ -252,14 +263,18 @@ XML3;
                     array(
                         array(
                             'ValueNot' => array(
-                                'Type'  => 'Integer',
-                                'Value' => 1
+                                '@attributes' => array(
+                                    'Type' => 'Integer'
+                                ),
+                                'Value'       => 1
                             )
                         ),
                         array(
                             'ValueNot' => array(
-                                'Type'  => 'Boolean',
-                                'Value' => 'True'
+                                '@attributes' => array(
+                                    'Type' => 'Boolean'
+                                ),
+                                'Value'       => 'True'
                             )
                         )
                     ),
@@ -270,14 +285,18 @@ XML3;
                         'Values' => array(
                             array(
                                 'Value' => array(
-                                    'Type'  => 'GuidWrong',
-                                    'Value' => '{AC0923-CD0923-DD092A}'
+                                    '@attributes' => array(
+                                        'Type' => 'GuidWrong'
+                                    ),
+                                    'Value'       => '{AC0923-CD0923-DD092A}'
                                 )
                             ),
                             array(
                                 'Value' => array(
-                                    'Type'  => 'Text',
-                                    'Value' => "This is test text!"
+                                    '@attributes' => array(
+                                        'Type' => 'Text'
+                                    ),
+                                    'Value'       => "This is test text!"
                                 )
                             )
                         )
@@ -289,20 +308,26 @@ XML3;
                         'Values' => array(
                             array(
                                 'Value' => array(
-                                    'Type'  => 'GuidWrong',
-                                    'Value' => '{AC0923-CD0923-DD092A}'
+                                    '@attributes' => array(
+                                        'Type' => 'GuidWrong'
+                                    ),
+                                    'Value'       => '{AC0923-CD0923-DD092A}'
                                 )
                             ),
                             array(
                                 'Value' => array(
-                                    'Type'  => 'Boolean',
-                                    'Value' => "True"
+                                    '@attributes' => array(
+                                        'Type' => 'Boolean'
+                                    ),
+                                    'Value'       => "True"
                                 )
                             ),
                             array(
                                 'Value' => array(
-                                    'Type'  => 'WorkflowStatusWrong',
-                                    'Value' => "NotHere"
+                                    '@attributes' => array(
+                                        'Type' => 'WorkflowStatusWrong'
+                                    ),
+                                    'Value'       => "NotHere"
                                 )
                             )
                         )
@@ -314,20 +339,26 @@ XML3;
                         'Value' => array(
                             array(
                                 'Value' => array(
-                                    'Type'  => 'GuidWrong',
-                                    'Value' => '{AC0923-CD0923-DD092A}'
+                                    '@attributes' => array(
+                                        'Type' => 'GuidWrong'
+                                    ),
+                                    'Value'       => '{AC0923-CD0923-DD092A}'
                                 )
                             ),
                             array(
                                 'Value' => array(
-                                    'Type'  => 'Boolean',
-                                    'Value' => "True"
+                                    '@attributes' => array(
+                                        'Type' => 'Boolean'
+                                    ),
+                                    'Value'       => "True"
                                 )
                             ),
                             array(
                                 'Value' => array(
-                                    'Type'  => 'WorkflowStatusWrong',
-                                    'Value' => "NotHere"
+                                    '@attributes' => array(
+                                        'Type' => 'WorkflowStatusWrong'
+                                    ),
+                                    'Value'       => "NotHere"
                                 )
                             )
                         )
@@ -339,14 +370,18 @@ XML3;
                         'Values' => array(
                             array(
                                 'Value' => array(
-                                    'Type'  => 'GuidWrong',
-                                    'Value' => '{AC0923-CD0923-DD092A}'
+                                    '@attributes' => array(
+                                        'Type' => 'GuidWrong'
+                                    ),
+                                    'Value'       => '{AC0923-CD0923-DD092A}'
                                 )
                             ),
                             array(
                                 'Value' => array(
-                                    'Type'  => 'WorkflowStatusWrong',
-                                    'Value' => "NotHere"
+                                    '@attributes' => array(
+                                        'Type' => 'WorkflowStatusWrong'
+                                    ),
+                                    'Value'       => "NotHere"
                                 )
                             )
                         )
@@ -392,8 +427,10 @@ XML5;
                 array(
                     array(
                         'Value' => array(
-                            'Type'  => 'Boolean',
-                            'Value' => 'True'
+                            '@attributes' => array(
+                                'Type' => 'Boolean'
+                            ),
+                            'Value'       => 'True'
                         )
                     ),
                     $xmlString
@@ -401,24 +438,30 @@ XML5;
                 // Test with missing main value key, but rest is correct - should pass
                 array(
                     array(
-                        'Type'  => 'Boolean',
-                        'Value' => 'True'
+                        '@attributes' => array(
+                            'Type' => 'Boolean'
+                        ),
+                        'Value'       => 'True'
                     ),
                     $xmlString
                 ),
                 // Test with missing main value key, and rest is wrong - should fail
                 array(
                     array(
-                        'TypeNot'  => 'Boolean',
-                        'ValueNot' => 'True'
+                        '@attributes' => array(
+                            'TypeNot' => 'Boolean'
+                        ),
+                        'ValueNot'    => 'True'
                     ),
                     FALSE
                 ),
                 array(
                     array(
                         'Value' => array(
-                            'Type'  => 'Text',
-                            'Value' => "This is test text!"
+                            '@attributes' => array(
+                                'Type' => 'Text'
+                            ),
+                            'Value'       => "This is test text!"
                         )
                     ),
                     $xmlString2
@@ -426,8 +469,10 @@ XML5;
                 array(
                     array(
                         'Value' => array(
-                            'Type'  => 'Boolean',
-                            'Value' => "True"
+                            '@attributes' => array(
+                                'Type' => 'Boolean'
+                            ),
+                            'Value'       => "True"
                         )
                     ),
                     $xmlString3
@@ -435,9 +480,11 @@ XML5;
                 array(
                     array(
                         'Value' => array(
-                            'Type'             => 'DateTime',
-                            'Value'            => "True",
-                            'IncludeTimeValue' => "True"
+                            '@attributes' => array(
+                                'Type'             => 'DateTime',
+                                'IncludeTimeValue' => "True"
+                            ),
+                            'Value'       => "True",
                         )
                     ),
                     $xmlString4
@@ -445,9 +492,11 @@ XML5;
                 array(
                     array(
                         'Value' => array(
-                            'Type'             => 'DateTime',
-                            'Value'            => "True",
-                            'IncludeTimeValue' => "False"
+                            '@attributes' => array(
+                                'Type'             => 'DateTime',
+                                'IncludeTimeValue' => "False"
+                            ),
+                            'Value'       => "True",
                         )
                     ),
                     $xmlString5
@@ -455,8 +504,10 @@ XML5;
                 array(
                     array(
                         'Value' => array(
-                            'Types' => 'Boolean',
-                            'Value' => "True"
+                            '@attributes' => array(
+                                'Type' => 'BooleanWrong'
+                            ),
+                            'Value'       => "True"
                         )
                     ),
                     FALSE
@@ -464,8 +515,10 @@ XML5;
                 array(
                     array(
                         'Value' => array(
-                            'Type'   => 'Boolean',
-                            'Values' => "True"
+                            '@attributes' => array(
+                                'Type' => 'Boolean'
+                            ),
+                            'Values'      => "True"
                         )
                     ),
                     FALSE
@@ -473,8 +526,10 @@ XML5;
                 array(
                     array(
                         'Value' => array(
-                            'Type'  => 'BooleanWrong',
-                            'Value' => "True"
+                            '@attributes' => array(
+                                'Type' => 'BooleanWrong'
+                            ),
+                            'Value'       => "True"
                         )
                     ),
                     FALSE
