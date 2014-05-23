@@ -186,8 +186,6 @@ class XMLHandler
             $this->errorLog[] = "Invalid array in function: " . __FUNCTION__ . " on line: " . __LINE__ . " in filename= " . __FILE__;
             return FALSE;
         }
-        /*            print_r($return . "\n");
-                    echo "\n \n";*/
         return $return;
     }
 

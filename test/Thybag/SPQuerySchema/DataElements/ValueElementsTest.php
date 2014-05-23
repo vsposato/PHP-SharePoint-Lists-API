@@ -553,25 +553,27 @@ XML5;
          */
         public function fieldRefProvider() {
             $xmlString = <<<XML1
-<FieldRef Alias="Last Name" Ascending="True" CreateURL="http://www.example.com" DisplayName="Customer Last Name" Explicit="False" Format="TestFormat" ID="{AC0923-CD0923-DD092A}" Key="Primary" Name="_LastName" />
+<FieldRef Alias="Last Name" Ascending="True" CreateURL="http://www.example.com" DisplayName="Customer Last Name" Explicit="False" Format="TestFormat" ID="{AC0923-CD0923-DD092A}" Key="Primary" Name="_LastName"></FieldRef>
 XML1;
             $xmlString2 = <<<XML2
-<FieldRef Alias="First Name" Ascending="False" DisplayName="Customer First Name" Explicit="True" Name="_FirstName" />
+<FieldRef Alias="First Name" Ascending="False" DisplayName="Customer First Name" Explicit="True" Name="_FirstName"></FieldRef>
 XML2;
 
             return array(
                 array(
                     array(
                         'FieldRef' => array(
-                            'Alias'       => 'Last Name',
-                            'Ascending'   => TRUE,
-                            'CreateURL'   => 'http://www.example.com',
-                            'DisplayName' => 'Customer Last Name',
-                            'Explicit'    => FALSE,
-                            'Format'      => 'TestFormat',
-                            'ID'          => '{AC0923-CD0923-DD092A}',
-                            'Key'         => 'Primary',
-                            'Name'        => '_LastName'
+                            '@attributes' => array(
+                                'Alias'       => 'Last Name',
+                                'Ascending'   => 'True',
+                                'CreateURL'   => 'http://www.example.com',
+                                'DisplayName' => 'Customer Last Name',
+                                'Explicit'    => 'False',
+                                'Format'      => 'TestFormat',
+                                'ID'          => '{AC0923-CD0923-DD092A}',
+                                'Key'         => 'Primary',
+                                'Name'        => '_LastName'
+                            )
                         )
                     ), $xmlString
                 ),
@@ -579,11 +581,45 @@ XML2;
                 array(
                     array(
                         'FieldRef' => array(
+                            '@attributes' => array(
+                                'AliasNot'       => 'Last Name',
+                                'AscendingNot'   => 'True',
+                                'CreateURLNot'   => 'http://www.example.com',
+                                'DisplayNameNot' => 'Customer Last Name',
+                                'ExplicitNot'    => 'False',
+                                'FormatNot'      => 'TestFormat',
+                                'IDNot'          => '{AC0923-CD0923-DD092A}',
+                                'KeyNot'         => 'Primary',
+                                'NameNot'        => '_LastName'
+                            )
+                        )
+                    ), FALSE
+                ),
+                array(
+                    // Test array missing field ref key with valid keys in it, should return correct string
+                    array(
+                        '@attributes' => array(
+                            'Alias'       => 'Last Name',
+                            'Ascending'   => 'True',
+                            'CreateURL'   => 'http://www.example.com',
+                            'DisplayName' => 'Customer Last Name',
+                            'Explicit'    => 'False',
+                            'Format'      => 'TestFormat',
+                            'ID'          => '{AC0923-CD0923-DD092A}',
+                            'Key'         => 'Primary',
+                            'Name'        => '_LastName'
+                        )
+                    ), $xmlString
+                ),
+                // Test array missing field ref key with no valid keys in it, should return false
+                array(
+                    array(
+                        '@attributes' => array(
                             'AliasNot'       => 'Last Name',
-                            'AscendingNot'   => TRUE,
+                            'AscendingNot'   => 'True',
                             'CreateURLNot'   => 'http://www.example.com',
                             'DisplayNameNot' => 'Customer Last Name',
-                            'ExplicitNot'    => FALSE,
+                            'ExplicitNot'    => 'False',
                             'FormatNot'      => 'TestFormat',
                             'IDNot'          => '{AC0923-CD0923-DD092A}',
                             'KeyNot'         => 'Primary',
@@ -592,57 +628,32 @@ XML2;
                     ), FALSE
                 ),
                 array(
-                    // Test array missing field ref key with valid keys in it, should return correct string
-                    array(
-                        'Alias'       => 'Last Name',
-                        'Ascending'   => TRUE,
-                        'CreateURL'   => 'http://www.example.com',
-                        'DisplayName' => 'Customer Last Name',
-                        'Explicit'    => FALSE,
-                        'Format'      => 'TestFormat',
-                        'ID'          => '{AC0923-CD0923-DD092A}',
-                        'Key'         => 'Primary',
-                        'Name'        => '_LastName'
-                    ), $xmlString
-                ),
-                // Test array missing field ref key with no valid keys in it, should return false
-                array(
-                    array(
-                        'AliasNot'       => 'Last Name',
-                        'AscendingNot'   => TRUE,
-                        'CreateURLNot'   => 'http://www.example.com',
-                        'DisplayNameNot' => 'Customer Last Name',
-                        'ExplicitNot'    => FALSE,
-                        'FormatNot'      => 'TestFormat',
-                        'IDNot'          => '{AC0923-CD0923-DD092A}',
-                        'KeyNot'         => 'Primary',
-                        'NameNot'        => '_LastName'
-                    ), FALSE
-                ),
-                array(
                     array(
                         'FieldRefs' => array(
-                            'Alias'       => 'Last Name',
-                            'Ascending'   => TRUE,
-                            'CreateURL'   => 'http://www.example.com',
-                            'DisplayName' => 'Customer Last Name',
-                            'Explicit'    => FALSE,
-                            'Format'      => 'TestFormat',
-                            'ID'          => '{AC0923-CD0923-DD092A}',
-                            'Key'         => 'Primary',
-                            'Name'        => '_LastName'
+                            '@attributes' => array(
+                                'Alias'       => 'Last Name',
+                                'Ascending'   => 'True',
+                                'CreateURL'   => 'http://www.example.com',
+                                'DisplayName' => 'Customer Last Name',
+                                'Explicit'    => 'False',
+                                'Format'      => 'TestFormat',
+                                'ID'          => '{AC0923-CD0923-DD092A}',
+                                'Key'         => 'Primary',
+                                'Name'        => '_LastName'
+                            )
                         )
                     ), FALSE
                 ),
                 array(
                     array(
                         'FieldRef' => array(
-                            'Alias'       => 'First Name',
-                            'Ascending'   => FALSE,
-                            'DisplayName' => 'Customer First Name',
-                            'Explicit'    => TRUE,
-                            'Format'      => '',
-                            'Name'        => '_FirstName'
+                            '@attributes' => array(
+                                'Alias'       => 'First Name',
+                                'Ascending'   => 'False',
+                                'DisplayName' => 'Customer First Name',
+                                'Explicit'    => 'True',
+                                'Name'        => '_FirstName'
+                            )
                         )
                     ), $xmlString2
                 ),
