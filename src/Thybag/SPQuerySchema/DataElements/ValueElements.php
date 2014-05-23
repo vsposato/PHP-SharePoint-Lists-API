@@ -316,7 +316,6 @@
             if ( empty( $XMLString ) || !isset( $XMLString ) ) {
                 $XMLString = "";
             }
-
             return "<XML>" . $XMLString . "</XML>";
         }
 
