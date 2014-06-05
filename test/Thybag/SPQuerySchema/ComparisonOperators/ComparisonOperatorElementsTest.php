@@ -156,23 +156,23 @@ class ComparisonOperatorElementsTest extends \PHPUnit_Framework_TestCase {
     public function buildComparisonProvider() {
 
         $beginsWithXMLStringXML = <<<XML1
-<BeginsWith><FieldRef Name="_LastName" /><Value Type="Text">Smith</Value></BeginsWith>
+<BeginsWith><FieldRef Name="_LastName"></FieldRef><Value Type="Text">Smith</Value></BeginsWith>
 XML1;
         $beginsWithXMLStringXMLDouble = <<<XML1
-<BeginsWith><FieldRef Name="_LastName" /><Value Type="Text">Smith</Value></BeginsWith><BeginsWith><FieldRef Name="_LastName" /><Value Type="Text">Smith</Value></BeginsWith>
+<BeginsWith><FieldRef Name="_LastName"></FieldRef><Value Type="Text">Smith</Value></BeginsWith><BeginsWith><FieldRef Name="_LastName"></FieldRef><Value Type="Text">Smith</Value></BeginsWith>
 XML1;
         $dateRangesOverlapStringXML = <<<XML2
-<DateRangesOverlap><FieldRef Name="PromDate" /><Value Type="DateTime">2014-04-01</Value></DateRangesOverlap>
+<DateRangesOverlap><FieldRef Name="PromDate"></FieldRef><Value Type="DateTime">2014-04-01</Value></DateRangesOverlap>
 XML2;
         $dateRangesOverlapStringXMLIncludeTime = <<<XML3
-<DateRangesOverlap><FieldRef Name="PromDate" /><Value Type="DateTime" IncludeTimeValue="True">2014-04-01 08:00</Value></DateRangesOverlap>
+<DateRangesOverlap><FieldRef Name="PromDate"></FieldRef><Value Type="DateTime" IncludeTimeValue="True">2014-04-01 08:00</Value></DateRangesOverlap>
 XML3;
         $inStringXML = <<<XML4
-<In><FieldRef Name="_LastName" /><Values><Value Type="Text">Smith</Value><Value Type="Text">Pence</Value></Values></In>
+<In><FieldRef Name="_LastName"></FieldRef><Values><Value Type="Text">Smith</Value><Value Type="Text">Pence</Value></Values></In>
 XML4;
 
         $inStringXMLWithXMLIsland = <<<XML5
-<In><FieldRef Name="_LastName" /><Values><Value Type="Text">Smith</Value><Value Type="Text">Pence</Value></Values><XML><SetVar Name="GlobalVar" Scope="Request">Bar</SetVar></XML></In>
+<In><FieldRef Name="_LastName"></FieldRef><Values><Value Type="Text">Smith</Value><Value Type="Text">Pence</Value></Values><XML><SetVar Name="GlobalVar" Scope="Request">Bar</SetVar></XML></In>
 XML5;
 
         return array(

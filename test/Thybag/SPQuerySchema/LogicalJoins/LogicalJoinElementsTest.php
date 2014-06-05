@@ -64,7 +64,7 @@ class LogicalJoinElementsTest extends \PHPUnit_Framework_TestCase {
         $expectedReturn1 = <<<XML1
 <And>
     <BeginsWith>
-        <FieldRef name="LastName"/>
+        <FieldRef name="LastName"></FieldRef>
         <Value type="Integer">1</Value>
     </BeginsWith>
 </And>
@@ -73,11 +73,11 @@ XML1;
         $beginsWithXMLStringXMLDouble = <<<XML1
 <And>
     <BeginsWith>
-        <FieldRef Name="_LastName"/>
+        <FieldRef Name="_LastName"></FieldRef>
         <Value Type="Text">Smith</Value>
     </BeginsWith>
     <BeginsWith>
-        <FieldRef Name="_FirstName"/>
+        <FieldRef Name="_FirstName"></FieldRef>
         <Value Type="Text">John</Value>
     </BeginsWith>
 </And>
@@ -86,17 +86,17 @@ XML1;
 <And>
     <And>
         <BeginsWith>
-            <FieldRef Name="_LastName"/>
+            <FieldRef Name="_LastName"></FieldRef>
             <Value Type="Text">Smith</Value>
         </BeginsWith>
         <BeginsWith>
-            <FieldRef Name="_FirstName"/>
+            <FieldRef Name="_FirstName"></FieldRef>
             <Value Type="Text">John</Value>
         </BeginsWith>
     </And>
     <And>
         <BeginsWith>
-            <FieldRef Name="_MiddleName"/>
+            <FieldRef Name="_MiddleName"></FieldRef>
             <Value Type="Text">Q</Value>
         </BeginsWith>
     </And>
@@ -106,21 +106,21 @@ XML2;
 <And>
     <And>
         <BeginsWith>
-            <FieldRef Name="_LastName"/>
+            <FieldRef Name="_LastName"></FieldRef>
             <Value Type="Text">Smith</Value>
         </BeginsWith>
         <BeginsWith>
-            <FieldRef Name="_FirstName"/>
+            <FieldRef Name="_FirstName"></FieldRef>
             <Value Type="Text">John</Value>
         </BeginsWith>
     </And>
     <And>
         <BeginsWith>
-            <FieldRef Name="_MiddleName"/>
+            <FieldRef Name="_MiddleName"></FieldRef>
             <Value Type="Text">Q</Value>
         </BeginsWith>
         <BeginsWith>
-            <FieldRef Name="City"/>
+            <FieldRef Name="City"></FieldRef>
             <Value Type="Text">Gainesville</Value>
         </BeginsWith>
     </And>
@@ -131,28 +131,28 @@ XML2;
     <And>
         <And>
             <BeginsWith>
-                <FieldRef Name="_LastName"/>
+                <FieldRef Name="_LastName"></FieldRef>
                 <Value Type="Text">Smith</Value>
             </BeginsWith>
             <BeginsWith>
-                <FieldRef Name="_FirstName"/>
+                <FieldRef Name="_FirstName"></FieldRef>
                 <Value Type="Text">John</Value>
             </BeginsWith>
         </And>
         <And>
             <BeginsWith>
-                <FieldRef Name="_MiddleName"/>
+                <FieldRef Name="_MiddleName"></FieldRef>
                 <Value Type="Text">Q</Value>
             </BeginsWith>
             <BeginsWith>
-                <FieldRef Name="City"/>
+                <FieldRef Name="City"></FieldRef>
                 <Value Type="Text">Gainesville</Value>
             </BeginsWith>
         </And>
     </And>
     <And>
         <BeginsWith>
-            <FieldRef Name="State"/>
+            <FieldRef Name="State"></FieldRef>
             <Value Type="Text">Florida</Value>
         </BeginsWith>
     </And>
