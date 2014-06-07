@@ -402,7 +402,11 @@ class SharePointAPI {
 		} else {
 
 			if (!is_null($query)) {
-				$xml_query .= $this->whereXML($query); // Build Query
+                if (is_array($query)) {
+                    $xml_query .= $this->whereXML($query); // Build Query
+                } else {
+                    $xml_query .= $query;
+                }
 			}
 			if (!is_null($sort)) {
 				$xml_query .= $this->sortXML($sort);// add sort

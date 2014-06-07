@@ -7,11 +7,14 @@
  */
 
 namespace Thybag\SPQuerySchema;
+use Thybag\SPQuerySchema\ComparisonOperators\ComparisonOperatorElements;
 
-
+/**
+ * Class SPQuerySchema
+ *
+ * @package Thybag\SPQuerySchema
+ */
 class SPQuerySchema {
-
-
 
     /**
      * buildCAMLQuery
