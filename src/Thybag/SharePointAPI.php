@@ -82,7 +82,7 @@ class SharePointAPI {
 	/**
 	 * Make all indexs lower-case
 	 */
-	private $lower_case_indexs = TRUE;
+	private $lower_case_indexes = TRUE;
 
 	/**
 	 * Maximum rows to return from a List
@@ -290,7 +290,7 @@ class SharePointAPI {
 		// Format data in to array or object
 		foreach ($nodes as $counter => $node) {
 			foreach ($node->attributes as $attribute => $value) {
-				$idx = ($this->lower_case_indexs) ? strtolower($attribute) : $attribute;
+				$idx = ($this->lower_case_indexes) ? strtolower($attribute) : $attribute;
 				$results[$counter][$idx] = $node->getAttribute($attribute);
 			}
 
@@ -346,7 +346,7 @@ class SharePointAPI {
 
 			// Get Attributes
 			foreach ($node->attributes as $attribute => $value) {
-				$idx = ($this->lower_case_indexs) ? strtolower($attribute) : $attribute;
+				$idx = ($this->lower_case_indexes) ? strtolower($attribute) : $attribute;
 				$results[$counter][$idx] = $node->getAttribute($attribute);
 			}
 
@@ -687,7 +687,7 @@ class SharePointAPI {
 	 * @param $enable TRUE|FALSE
 	 */
 	public function lowercaseIndexs ($enable) {
-		$this->lower_case_indexs = ($enable === TRUE);
+		$this->lower_case_indexes = ($enable === TRUE);
 	}
 
 	/**
@@ -758,7 +758,7 @@ class SharePointAPI {
 		foreach ($results as $i => $result) {
 			$resultArray[$i] = array();
 			foreach ($result->attributes as $attribute => $value) {
-				$idx = ($this->lower_case_indexs) ? strtolower($attribute) : $attribute;
+				$idx = ($this->lower_case_indexes) ? strtolower($attribute) : $attribute;
 				//  Re-assign all the attributes into an easy to access array
 				$resultArray[$i][str_replace('ows_', '', $idx)] = $result->getAttribute($attribute);
 			}
@@ -982,7 +982,7 @@ class SharePointAPI {
 		//If we get a result (and there is only one of them) return it in "Lookup" format
 		if (isset($find[0]) && count($find) === 1) {
 			settype($find[0], 'array');//Set type to array in case API is in object mode.
-			if ($this->lower_case_indexs) {
+			if ($this->lower_case_indexes) {
 				return static::lookup($find[0]['id'], $find[0]['title']);
 			} else {
 				return static::lookup($find[0]['ID'], $find[0]['Title']);
@@ -1094,7 +1094,7 @@ class SharePointAPI {
             // Get the versions for each field
             if(sizeof($field_versions) !== 0) {
                 foreach($field_versions as $key => $value) {
-                    if($this->lower_case_indexs) {
+                    if($this->lower_case_indexes) {
                         $results[$key][strtolower($field['name'])] = $value[strtolower($field['name'])];
                     } else {
                         $results[$key][$field['name']] = $value[$field['name']];
