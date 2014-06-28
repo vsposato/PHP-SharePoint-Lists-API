@@ -346,6 +346,43 @@
         }
 
         /**
+         * getLookupFieldOptions
+         *
+         * Pulls rows of a lookup table back into array format that can be used for a dropdown
+         *
+         * @param $list_name
+         * @param $field_name
+         *
+         * @return array
+         *
+         * @author  Vincent Sposato <vsposato@ufl.edu>
+         * @version 1.0
+         */
+        public function getLookupFieldOptions( $list_name, $field_name ) {
+
+            // Build Initial CAML
+            $CAML = '
+            <GetListItems xmlns="http://schemas.microsoft.com/sharepoint/soap/">
+                <listName>' . $list_name . '</listName>
+            </GetListItems>
+        ';
+
+            // Initial array for rawResult
+            $rawResult = array();
+
+            try {
+                $rawResult = $this->xmlHandler($this->soapClient->GetListItems( new \SoapVar( $CAML, XSD_ANYXML ) )->GetListItemsResult->any);
+            } catch ( \SoapFault $fault ) {
+                $this->onError( $fault );
+            }
+
+            // Get formatted results back
+            $returnLookupArray = $this->_getArrayOfLookupFieldOptions( $rawResult, $field_name );
+
+            return $returnLookupArray;
+        }
+
+        /**
          * Read List MetaData (Column configurtion)
          * Return a full listing of columns and their configurtion options for a given sharepoint list.
          *
@@ -822,6 +859,37 @@
             return $returnChoiceArray;
         }
 
+        /**
+         * _getArrayOfLookupFieldOptions
+         *
+         * @param $rawResultArray
+         * @param $fieldName
+         *
+         * @internal param $rawXml
+         * @return array
+         * @author   Vincent Sposato <vsposato@ufl.edu>
+         * @version  1.0
+         */
+        private function _getArrayOfLookupFieldOptions( $rawResultArray, $fieldName ) {
+            // Return choice array
+            $returnLookupOptionsArray = array();
+
+            // Do we need to lowercase all of the indexes of fields?
+            if ($this->lower_case_indexes === TRUE) {
+                $fieldName = strtolower($fieldName);
+            }
+
+            // Loop through the results to find the field we need
+            foreach ($rawResultArray as $result) {
+                // Is the field name that holds the value in the result, and is it populated?
+                if (isset($result[$fieldName]) && ! empty($result[$fieldName])) {
+                    // Add it as a key and a value to the return array
+                    $returnLookupOptionsArray[$result[$fieldName]] = $result[$fieldName];
+                }
+            }
+            // Return nodes list
+            return $returnLookupOptionsArray;
+        }
         /**
          * xmlHandler
          * Transform the XML returned from SOAP in to a useful data structure.

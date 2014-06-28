@@ -52,6 +52,7 @@
             'Counter',
             'Choice',
             'Lookup',
+            'LookupMulti',
             'Boolean',
             'Number',
             'Currency',
